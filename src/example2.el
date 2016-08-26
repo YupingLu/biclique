@@ -1,0 +1,25 @@
+10	4	24
+u2	v1
+u2	v2
+u1	v3
+u1	v4
+u2	v4
+u3	v1
+u3	v3
+u4	v2
+u4	v3
+u5	v1
+u5	v2
+u6	v1
+u6	v3
+u6	v4
+u7	v1
+u7	v3
+u7	v4
+u8	v2
+u8	v3
+u9	v1
+u9	v2
+u9	v3
+u9	v4
+u10	v1
