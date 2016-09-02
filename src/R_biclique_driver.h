@@ -14,11 +14,17 @@
 #ifndef __R_BICLIQUE_DRIVER__
 #define __R_BICLIQUE_DRIVER__
 
+#include <R.h>
+#include <Rdefines.h>
+#include <Rinternals.h>
+
 #include <string.h>
 #include "bit.h"
 #include "bigraph.h"
 #include "utility.h"
 #include "biclique.h"
+
+#define CHARPT(x,i)  ((char*)CHAR(STRING_ELT(x,i)))
 
 void maximal_biclique(char *fn, BiGraph *G);
 

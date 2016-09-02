@@ -1,0 +1,14 @@
+### Makefile for Biclique
+
+PKG_CFLAGS = -O3 -g -D_FILE_OFFSET_BITS=64
+
+OBJECTS = bigraph.o utility.o sort.o biclique.o R_biclique_driver.o
+
+### Start making here.
+all: $(SHLIB)
+
+$(SHLIB): $(OBJECTS)
+
+clean:
+    @rm -rf *.o *.mod *.d *.rc *.so *.dylib *.dll *.a *.lib \
+        Makedeps Makevars $(SHLIB) $(OBJECTS) 

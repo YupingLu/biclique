@@ -134,22 +134,29 @@ void maximal_biclique(char *fn, BiGraph *G)
 
 }
 
-
 /**
- * Read a variable. 
+ * Read input file and do the bicliuqe enumeration.
+ * Two formats are supported: bel and bmat
  * If start and count is not specified, a whole list is returned.
  */
-SEXP R_read(SEXP R_adios_path)
-{
-    
-}
-
-
-int main(int argc, char  **argv)
+SEXP R_biclique(SEXP R_file)
 {
     BiGraph *G;
+    const char *filepath = CHARPT(R_file, 0);
+    strcpy(infn, filepath);
+    if ((fp = fopen(infn, "r")) == NULL) {
+        REprintf("Can't open file %s\n", infn);
+        return R_NilValue;
+    }
 
-    argument_parse(argc, argv);
+    LLEAST = 1;
+    RLEAST = 1;
+    DEGREE = 0;
+    VERSION = 1;
+    PRINT = 0;
+    outfn = NULL;
+    SORT_TYPE = 1;
+    INPUT = 0;  // default = edge list = 0
     
     stime = get_cur_time();
     if (INPUT==0) G = bigraph_edgelist_in(fp);
@@ -165,6 +172,5 @@ int main(int argc, char  **argv)
 
     bigraph_free(G);
 
-    exit(0);
+    return R_NilValue;
 }
-
