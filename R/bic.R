@@ -6,10 +6,10 @@
 #' @param filename input file name
 #' 
 #' @examples
-#' bpls("attributes.bp")
+#' bic("example1.el")
 #'
 #' @export
-bpclique <- function(filename)
+bic <- function(filename)
 {
     .Call("R_biclique", 
           as.character(filename))
