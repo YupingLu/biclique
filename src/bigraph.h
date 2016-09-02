@@ -14,17 +14,17 @@
 
 /* data structure of a bipartite graph */
 typedef struct bipartite_graph_t {
-  unsigned int _num_v1;  /* number of vertices in V1 */
-  unsigned int _num_v2;  /* number of vertices in V2 */
-  unsigned int _num_edges;       /* number of active edges */
-  unsigned int _num_bytes_v1;    /* number of bytes for V1 */
-  unsigned int _num_bytes_v2;    /* number of bytes for V2 */
-  char ** _label_v1;     /* labels of vertices in V1 */
-  char ** _label_v2;     /* labels of vertices in V2 */
-  unsigned int **_neighbor_v1;       /* bit-based adjacency matrix for V1 */
-  unsigned int **_neighbor_v2;       /* bit-based adjacency matrix for V2 */
-  unsigned short *_degree_v1;   /* number of edges each vertex have (<65536) */
-  unsigned short *_degree_v2;   /* number of edges each vertex have (<65536) */
+    unsigned int _num_v1;  /* number of vertices in V1 */
+    unsigned int _num_v2;  /* number of vertices in V2 */
+    unsigned int _num_edges;       /* number of active edges */
+    unsigned int _num_bytes_v1;    /* number of bytes for V1 */
+    unsigned int _num_bytes_v2;    /* number of bytes for V2 */
+    char ** _label_v1;     /* labels of vertices in V1 */
+    char ** _label_v2;     /* labels of vertices in V2 */
+    unsigned int **_neighbor_v1;       /* bit-based adjacency matrix for V1 */
+    unsigned int **_neighbor_v2;       /* bit-based adjacency matrix for V2 */
+    unsigned short *_degree_v1;   /* number of edges each vertex have (<65536) */
+    unsigned short *_degree_v2;   /* number of edges each vertex have (<65536) */
 } BiGraph;
 
 
@@ -57,18 +57,18 @@ typedef struct bipartite_graph_t {
 
 /* add an edge to graph */
 #define bigraph_add_edge(g, u, v)  { \
-  if (!IS_SET(g->_neighbor_v2[v], u)) {\
-    SET_BIT(g->_neighbor_v2[v], u); SET_BIT(g->_neighbor_v1[u], v);\
-    g->_num_edges++; \
-    g->_degree_v1[u]++; g->_degree_v2[v]++; }\
-}	
+    if (!IS_SET(g->_neighbor_v2[v], u)) {\
+        SET_BIT(g->_neighbor_v2[v], u); SET_BIT(g->_neighbor_v1[u], v);\
+        g->_num_edges++; \
+        g->_degree_v1[u]++; g->_degree_v2[v]++; }\
+}   
 
 /* delete an edge from graph */
 #define bigraph_delete_edge(g, u, v) { \
-  if (IS_SET(g->_neighbor_v2[v], u)) {\
-    DEL_BIT(g->_neighbor_v2[v], u); DEL_BIT(g->_neighbor_v1[u], v); \
-    g->_degree_v1[u]--; g->_degree_v2[v]--; \
-    g->_num_edges--; } \
+    if (IS_SET(g->_neighbor_v2[v], u)) {\
+        DEL_BIT(g->_neighbor_v2[v], u); DEL_BIT(g->_neighbor_v1[u], v); \
+        g->_degree_v1[u]--; g->_degree_v2[v]--; \
+        g->_num_edges--; } \
 }
 
 

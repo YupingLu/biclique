@@ -1,24 +1,17 @@
-/* Driver file for Biclique Enumerator
+/* 
+ * R wrapper of Biclique Enumerator
  *
- * Author: Yun Zhang, yzhang@cs.utk.edu
- * Created: April 2006
+ * Author: Yuping Lu, yupinglu@utk.edu
+ * Created: September 2016
  *
- * Copyright 2005-2006
+ * Copyright 2016-2017
  * Department of Computer Science, University of Tennessee, Knoxville
- * Computer Science and Mathematics Division, Oak Ridge National Laboratory
  *
- * Last modified: September 2008
+ * Last modified: September 2016
  *
- * Changes: This version has added the choice to take binary matrix 
- * as input file.
  */
 
-#include <string.h>
-#include "bit.h"
-#include "bigraph.h"
-#include "utility.h"
-#include "biclique.h"
-
+#include "R_biclique_driver.h"
 
 extern int LLEAST, RLEAST;
 extern int CACHE_SIZE;
@@ -32,35 +25,16 @@ FILE *fp;
 char infn[100];
 char *outfn;
 int DEGREE;
-char INPUT;
+char INPUT;ß
 
-void print_options(void)
-{
-    fprintf(stderr, "\n Options: \n");
-    fprintf(stderr, "  -i [e|m] input file format <default = e>\n");
-    fprintf(stderr, "       e - edge list\n");
-    fprintf(stderr, "       m - binary matrix\n");
-    fprintf(stderr, "  -m [c|d] output type <default = c>\n");
-    fprintf(stderr, "       c - biclique list\n");
-    fprintf(stderr, "       d - degree list\n");
-    fprintf(stderr, "  -v [1|2] algorithm version <default = 1>\n");
-    fprintf(stderr, "  -p       print out bicliques <default = no print out>\n");
-    fprintf(stderr, "  -o <filename>  \n");
-    fprintf(stderr, "           output filename to store bicliques if choose to print\n");
-    fprintf(stderr, "                     <default = STDOUT>\n");
-    fprintf(stderr, "  -l <value>         least number of genes <default = 1>\n");
-    fprintf(stderr, "  -r <value>         least number of phenotypes <default = 1>\n");
-    fprintf(stderr, "\n");
-}
-
-void argument_parse(int argc, char **argv)
+/*void argument_parse(int argc, char **argv)
 {
     int i;
     
     if (argc < 2) {
         fprintf(stderr, "Usage: %s Graph <options>\n", argv[0]);
         print_options();
-    exit(1);
+        exit(1);
     }
     
     LLEAST = 1;
@@ -110,8 +84,7 @@ void argument_parse(int argc, char **argv)
     }
 
     return;
-}
-
+}*/
 
 void maximal_biclique(char *fn, BiGraph *G)
 {
@@ -123,7 +96,7 @@ void maximal_biclique(char *fn, BiGraph *G)
     int i;
 
     if (PRINT) { 
-    if (fn != NULL) { fp1 = fopen(fn, "w"); }
+        if (fn != NULL) { fp1 = fopen(fn, "w"); }
         else { fp1 = stdout; }
     }
     sprintf(fname, "%s.profile", infn);
@@ -159,6 +132,16 @@ void maximal_biclique(char *fn, BiGraph *G)
     if (fp1 != NULL) fclose(fp1);
     fclose(fp2);
 
+}
+
+
+/**
+ * Read a variable. 
+ * If start and count is not specified, a whole list is returned.
+ */
+SEXP R_read(SEXP R_adios_path)
+{
+    
 }
 
 

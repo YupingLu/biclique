@@ -36,25 +36,25 @@ typedef unsigned short vid_t;
 
 /* data structure of a set */
 typedef struct set_t {
-  unsigned int _set_size;     /* total number of vertices */
-  unsigned int _num_elements; /* number of vertices in the set */
-  unsigned int *_set;         /* bit-based vector: 1 - in set */
+    unsigned int _set_size;     /* total number of vertices */
+    unsigned int _num_elements; /* number of vertices in the set */
+    unsigned int *_set;         /* bit-based vector: 1 - in set */
 } Set;
 
 /* data structure of a mapping */
 typedef struct mapping_t {
-  unsigned int _size;       /* total number of vertices */
-  short *_mapping;   /* vector, allow number of vertices up to 32768 */
+    unsigned int _size;       /* total number of vertices */
+    short *_mapping;   /* vector, allow number of vertices up to 32768 */
 } Mapping;
 
 /* Structure for memory management */
 typedef struct memory_t {
-  size_t _num_bytes;        /* number of bytes in each chunk */
-  unsigned short _num_chunk;  /* number of chunks */
-  unsigned short _cur_chunk;  /* current chunk id */
-  unsigned char **_head;     /* head pointers of each chunk */
-  unsigned char *_sbrk;     /* sbrk of the memory */
-  unsigned char **_tail;     /* tail pointers of each chunk */
+    size_t _num_bytes;        /* number of bytes in each chunk */
+    unsigned short _num_chunk;  /* number of chunks */
+    unsigned short _cur_chunk;  /* current chunk id */
+    unsigned char **_head;     /* head pointers of each chunk */
+    unsigned char *_sbrk;     /* sbrk of the memory */
+    unsigned char **_tail;     /* tail pointers of each chunk */
 } Memory;
 
 
@@ -74,12 +74,12 @@ typedef struct memory_t {
 
 /* add a vertex to set */
 #define add_to_set(s, u) {\
-  if (!IS_SET(s->_set, u)) { SET_BIT(s->_set, u); s->_num_elements++; }\
+    if (!IS_SET(s->_set, u)) { SET_BIT(s->_set, u); s->_num_elements++; }\
 }
 
 /* delete a vertex from set */
 #define delete_from_set(s, u) {\
-  if (IS_SET(s->_set, u)) { DEL_BIT(s->_set, u); s->_num_elements--; }\
+    if (IS_SET(s->_set, u)) { DEL_BIT(s->_set, u); s->_num_elements--; }\
 }
 
 /* Macros for Mapping */
@@ -99,37 +99,37 @@ typedef struct memory_t {
 /* return the number of 1's in a given bit string */
 extern unsigned char bit_num_ones[256];
 #define bit_count_ones(n, b, s) {\
-  unsigned char *bits = (unsigned char *)b;\
-  int my_i;\
-  n = 0; \
-  for (my_i = 0; my_i < s; my_i++) \
-    n += bit_num_ones[bits[my_i]];\
+    unsigned char *bits = (unsigned char *)b;\
+    int my_i;\
+    n = 0; \
+    for (my_i = 0; my_i < s; my_i++) \
+        n += bit_num_ones[bits[my_i]];\
 }
 
 /* return 1 if all bits are 0's, return 0 otherwise */
 #define bit_all_zeros(b, s, yn) {\
-  unsigned int *bits;\
-  int my_i;\
-  bits = (unsigned int *)b;\
-  for (my_i = 0; my_i < s/sizeof(unsigned int); my_i++) \
-    if (bits[my_i] != 0) { yn = 0; break; } \
+    unsigned int *bits;\
+    int my_i;\
+    bits = (unsigned int *)b;\
+    for (my_i = 0; my_i < s/sizeof(unsigned int); my_i++) \
+        if (bits[my_i] != 0) { yn = 0; break; } \
 }
 
 /* return the intersection of two memory block of given size to dst */
 #define bit_intersect(dst, src, n) {\
-  int my_i, my_n=n/sizeof(unsigned int); \
-  if (dst != NULL && src != NULL) {\
-	for (my_i = 0; my_i < my_n; my_i++) \
-      dst[my_i] &= src[my_i]; }\
+    int my_i, my_n=n/sizeof(unsigned int); \
+    if (dst != NULL && src != NULL) {\
+    for (my_i = 0; my_i < my_n; my_i++) \
+            dst[my_i] &= src[my_i]; }\
 }
 
 void function_bit_intersect(void *dst, void *src, int n);
 
 /* return the union of two memory block of given size to dst */
 #define bit_union(dst, src, n) {\
-  int my_i, my_n=n/sizeof(unsigned int); \
-  for (my_i = 0; my_i < my_n; my_i++) \
-    dst[my_i] != src[my_i]; \
+    int my_i, my_n=n/sizeof(unsigned int); \
+    for (my_i = 0; my_i < my_n; my_i++) \
+        dst[my_i] != src[my_i]; \
 }
 
 /* return the number of unsigned ints to represent n bits */
@@ -151,15 +151,15 @@ void free_set(Set *S);
 void print_set(FILE *fp, Set *S);
 
 /* Copy set src to set dst 
-   return 0 if successful, -1 if failed */ 
+     return 0 if successful, -1 if failed */ 
 int copy_set(Set *dst, Set *src);
 
 /* Return the intersection of two sets to Set dst
-   return 0 if successful, -1 if failed */
+     return 0 if successful, -1 if failed */
 int intersect_set(Set *dst, Set *src);
-	
+    
 /* Return the union of two sets to set dst
-   return 0 if success, -1 if failed */
+     return 0 if success, -1 if failed */
 int union_set(Set *dst, Set *src);
 
 /* Malloc a mapping, initialize it and returns a pointer to it */
@@ -186,8 +186,8 @@ void *mem_union(void *dst, const void *src, int n);
 /** Timer function **/
 
 /* Returns current time in seconds as a double value
-   and the precision can be as accurate as microseconds
-   (10^-6 second) 
+     and the precision can be as accurate as microseconds
+     (10^-6 second) 
  */
 double get_cur_time();
 

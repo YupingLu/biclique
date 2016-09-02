@@ -1,9 +1,9 @@
 # Makefile for Biclique
 
 CC = gcc
-MPICC = mpicc
+#MPICC = mpicc
 CFLAGS = -O3 -g #-Wall
-PTHREADS = -lpthread
+#PTHREADS = -lpthread
 LFSFLAG = -D_FILE_OFFSET_BITS=64
 TESTFLAGS = #-DPERFORMANCE #-DDEBUG #-DVERBOSE
 
