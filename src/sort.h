@@ -21,9 +21,9 @@ enum {
 };
 
 
-inline void swap_int(int *array, int i, int j);
+void swap_int(int *array, int i, int j);
 
-inline void swap_vid(vid_t *array, int i, int j);
+void swap_vid(vid_t *array, int i, int j);
 
 void bubble_sort(vid_t *array, int start, int end, int *noc);
 

@@ -190,8 +190,8 @@ BiGraph * bigraph_binarymatrix_in(FILE *fp)
     char *a = NULL;
     int n1, n2, k1, k2, i, j;
 
-
-    fgets(line, LINE_LENGTH, fp);
+    if(fgets(line, LINE_LENGTH, fp) == NULL) return NULL;
+    //fgets(line, LINE_LENGTH, fp);
     a = strtok(line, delims);
     n1 = atoi(a);
     a = strtok(NULL, delims);
@@ -199,7 +199,8 @@ BiGraph * bigraph_binarymatrix_in(FILE *fp)
     
     G = bigraph_make(n1, n2);
     
-    fgets(line, LINE_LENGTH, fp);
+    if(fgets(line, LINE_LENGTH, fp) == NULL) return NULL;
+    //fgets(line, LINE_LENGTH, fp);
     a = strtok(line, delims);
     k2 = 0;
     G->_label_v2[k2++] = strdup(a);
