@@ -25,66 +25,7 @@ FILE *fp;
 char infn[100];
 char *outfn;
 int DEGREE;
-char INPUT;ß
-
-/*void argument_parse(int argc, char **argv)
-{
-    int i;
-    
-    if (argc < 2) {
-        fprintf(stderr, "Usage: %s Graph <options>\n", argv[0]);
-        print_options();
-        exit(1);
-    }
-    
-    LLEAST = 1;
-    RLEAST = 1;
-    DEGREE = 0;
-    VERSION = 1;
-    PRINT = 0;
-    outfn = NULL;
-    SORT_TYPE = 1;
-    INPUT = 0;  // default = edge list = 0
-    
-    for (i = 2; i < argc; i++) {
-        if (!strcmp(argv[i], "-i")) {
-            i++;
-            if (!strcmp(argv[i], "e")) INPUT = 0;
-            else if (!strcmp(argv[i], "m")) INPUT = 1;
-        }
-        if (!strcmp(argv[i], "-o")) {
-            outfn = strdup(argv[++i]);
-        }
-        if (!strcmp(argv[i], "-l")) {
-            LLEAST = atoi(argv[++i]);
-        }
-        if (!strcmp(argv[i], "-r")) {
-            RLEAST = atoi(argv[++i]);
-        }
-        if (!strcmp(argv[i], "-v")) {
-            VERSION = atoi(argv[++i]);
-        }
-        if (!strcmp(argv[i], "-p")) {
-            PRINT = 1;
-        }
-        if (!strcmp(argv[i], "-s")) {
-            SORT_TYPE = atoi(argv[++i]);
-        }
-        if (!strcmp(argv[i], "-m")) {
-            i++;
-            if (!strcmp(argv[i], "c")) DEGREE = 0;
-            else if (!strcmp(argv[i], "d")) DEGREE = 1;
-        }
-    }
-
-    strcpy(infn, argv[1]);
-    if ((fp = fopen(infn, "r")) == NULL) {
-        fprintf(stderr, "Can't open file %s\n", infn);
-        exit(-1);
-    }
-
-    return;
-}*/
+char INPUT;
 
 void maximal_biclique(char *fn, BiGraph *G)
 {
@@ -142,6 +83,7 @@ void maximal_biclique(char *fn, BiGraph *G)
 SEXP R_biclique(SEXP R_file)
 {
     BiGraph *G;
+
     const char *filepath = CHARPT(R_file, 0);
     strcpy(infn, filepath);
     if ((fp = fopen(infn, "r")) == NULL) {
@@ -157,13 +99,10 @@ SEXP R_biclique(SEXP R_file)
     outfn = NULL;
     SORT_TYPE = 1;
     INPUT = 0;  // default = edge list = 0
-    
-    stime = get_cur_time();
+
     if (INPUT==0) G = bigraph_edgelist_in(fp);
     else if (INPUT==1) G = bigraph_binarymatrix_in(fp);
     fclose(fp);
-
-    time_in = get_cur_time() - stime;
 
     if (DEGREE) {
         bigraph_degreelist_out(stdout, G);

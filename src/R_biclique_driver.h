@@ -27,5 +27,6 @@
 #define CHARPT(x,i)  ((char*)CHAR(STRING_ELT(x,i)))
 
 void maximal_biclique(char *fn, BiGraph *G);
+SEXP R_biclique(SEXP R_file);
 
 #endif
