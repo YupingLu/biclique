@@ -18,9 +18,8 @@ extern int CACHE_SIZE;
 extern int VERSION;
 extern int PRINT;
 extern long long node_num;
-extern double time_check, time_expand, time_out, time_sort;
 extern int SORT_TYPE;
-double time_in, stime;
+
 FILE *fp;
 char infn[100];
 char *outfn;
@@ -45,13 +44,9 @@ void maximal_biclique(char *fn, BiGraph *G)
 
     for (i = 0; i < n2; i++) cand[i] = i;
     biclique_enumerate(fp1, fp2, G, cand, n2);
-    utime = get_cur_time() - stime;
-
-    fprintf(fp2, "%f total time\n", utime);
 
     if (fp1 != NULL) fclose(fp1);
     fclose(fp2);
-
 }
 
 /**
