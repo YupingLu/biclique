@@ -193,12 +193,6 @@ void candidate_sort(vid_t *right, int start, int end, \
         case SHELL_SORT : shell_sort(right, start, end, noc); break;
     default : break;
     }
-
-#ifdef DEBUG1
-    for (i = start; i < end; i++)
-    printf("%s(%d) ", G->_label_v2[right[i]], noc[i-start]);
-    printf("\n");
-#endif
     
 }
 

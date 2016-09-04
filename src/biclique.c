@@ -22,13 +22,6 @@ int PRINT;
 
 typedef unsigned long num_t;
 
-#ifdef PERFORMANCE
-long long node_num;
-double time_check, time_expand, time_out, time_sort;
-#endif
-
-
-
 /* ------------------------------------------------------------- *
  * Function: biclique_profile_out()                              *
  *   Print out the profile, no. of left/right vertices, no. of   *
@@ -76,9 +69,7 @@ void biclique_out(FILE *fp, BiGraph *G, vid_t *right, \
                 int nr, vid_t *left, int nl)
 {
     int i;
-#ifdef PERFORMANCE
-    double utime = get_cur_time();
-#endif
+
     for (i = 0; i < nr-1; i++) {
         fprintf(fp, "%s\t", G->_label_v2[right[i]]);
     }
@@ -88,9 +79,6 @@ void biclique_out(FILE *fp, BiGraph *G, vid_t *right, \
     }
     fprintf(fp, "%s\n", G->_label_v1[left[i]]);
     fprintf(fp, "\n");
-#ifdef PERFORMANCE
-    time_out += get_cur_time() - utime;
-#endif
 }
 
 
@@ -145,23 +133,11 @@ void biclique_find_basic(FILE *fp, BiGraph *G, num_t *nclique, \
     vid_t u, v, w, j, k;
     int new_nc, new_nl, new_ne, new_ce;
     int count, is_maximal=1;
-#ifdef PERFORMANCE
-    double utime;
-#endif
 
     while (ne < ce) {
 
         /* Choose one vertex from candidate set */
         v = right[ne];
-        
-#ifdef DEBUG
-    searchtreenode_out(G, clique, right, left, nc, ne, ce, nl);
-#endif
-
-#ifdef PERFORMANCE
-    node_num++;
-    utime = get_cur_time();
-#endif
 
         /* Set right vertices in clique */
         new_nc = nc;
@@ -174,11 +150,6 @@ void biclique_find_basic(FILE *fp, BiGraph *G, num_t *nclique, \
             u = left[j];
             if (bigraph_edge_exists(G, u, v)) new_left[new_nl++] = u;
         }
-        
-#ifdef PERFORMANCE
-    time_expand += get_cur_time() - utime;
-    utime = get_cur_time();
-#endif
 
         /* Set right vertices in not */
         memset(new_right, -1, ce*sizeof(vid_t));
@@ -197,17 +168,8 @@ void biclique_find_basic(FILE *fp, BiGraph *G, num_t *nclique, \
 
         /* Stop this branch if it is not maximal */
         if (!is_maximal) { 
-#ifdef DEBUG
-    searchtreenode_out2(G, clique, new_right, new_left, right, w, \
-                    new_nc, new_ne, new_ce, new_nl, ne);
-#endif
             ne++; continue;
         }
-        
-#ifdef PERFORMANCE
-    time_check += get_cur_time() - utime;
-    utime = get_cur_time();
-#endif
 
         /* Set right vertices in cand */
         new_ce = new_ne;
@@ -225,10 +187,6 @@ void biclique_find_basic(FILE *fp, BiGraph *G, num_t *nclique, \
                 new_right[new_ce++] = w;
             }
         }
-        
-#ifdef PERFORMANCE
-    time_expand += get_cur_time() - utime;
-#endif
 
         /* Print out the found maximal biclique */
         if (new_nc >= RLEAST && new_nl >= LLEAST) {
@@ -242,10 +200,6 @@ void biclique_find_basic(FILE *fp, BiGraph *G, num_t *nclique, \
                 new_left, new_nl, new_right, new_ne, new_ce);
         }
         else {
-#ifdef DEBUG
-    searchtreenode_out(G, clique, new_right, new_left, \
-                    new_nc, new_ne, new_ce, new_nl);
-#endif
      }
 
         /* Move v to former candidate set */
@@ -271,9 +225,7 @@ void biclique_find_improve(FILE *fp, BiGraph *G, num_t *nclique, \
     int new_nc, new_nl, new_ne, new_ce;
     int count, is_maximal=1;
     int x, noc[ce-ne];
-#ifdef PERFORMANCE
-    double utime;
-#endif
+
     // Improvement II
     // divide new_left to two parts: in L' and not in L'
     // ----------------------------
@@ -291,15 +243,6 @@ void biclique_find_improve(FILE *fp, BiGraph *G, num_t *nclique, \
     
         /* Choose the next candidate in P */
         v = right[ne];
-        
-#ifdef DEBUG
-    searchtreenode_out(G, clique, right, left, nc, ne, ce, nl);
-#endif
-
-#ifdef PERFORMANCE
-    node_num++;
-    utime = get_cur_time();
-#endif
 
         /* Choose one vertex from candidate set */
         new_nc = nc;
@@ -314,11 +257,6 @@ void biclique_find_improve(FILE *fp, BiGraph *G, num_t *nclique, \
                 new_left[new_nl++] = u;
             else new_left[not_nl--] = u;
         }
-        
-#ifdef PERFORMANCE
-    time_expand += get_cur_time() - utime;
-    utime = get_cur_time();
-#endif
 
         /* Set right vertices in not */
         memset(new_right, -1, ce*sizeof(vid_t));
@@ -337,17 +275,8 @@ void biclique_find_improve(FILE *fp, BiGraph *G, num_t *nclique, \
 
         /* Stop this branch if it is not maximal */
         if (!is_maximal) { 
-#ifdef DEBUG
-    searchtreenode_out2(G, clique, new_right, new_left, right, w, \
-                    new_nc, new_ne, new_ce, new_nl, ne);
-#endif
             ne++; continue;
         }
-        
-#ifdef PERFORMANCE
-    time_check += get_cur_time() - utime;
-    utime = get_cur_time();
-#endif
 
         /* Set right vertices in cand */
         memset(noc, 0, (ce-ne)*sizeof(int));
@@ -390,10 +319,6 @@ void biclique_find_improve(FILE *fp, BiGraph *G, num_t *nclique, \
             }
         }
 
-#ifdef PERFORMANCE
-    time_expand += get_cur_time() - utime;
-#endif
-
         /* Print out the found maximal biclique */
         if (new_nc >= RLEAST && new_nl >= LLEAST) {
             nclique[(new_nc-1)*n1+(new_nl-1)]++;
@@ -406,10 +331,6 @@ void biclique_find_improve(FILE *fp, BiGraph *G, num_t *nclique, \
                 new_left, new_nl, new_right, new_ne, new_ce);
         }
         else {
-#ifdef DEBUG
-    searchtreenode_out(G, clique, new_right, new_left, \
-                    new_nc, new_ne, new_ce, new_nl);
-#endif
         }
         
         /* Move v and other qualified vertics to former candidate set */

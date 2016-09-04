@@ -43,31 +43,10 @@ void maximal_biclique(char *fn, BiGraph *G)
     sprintf(fname, "%s.profile", infn);
     fp2 = fopen(fname, "w");
 
-#ifdef PERFORMANCE
-    node_num = 0;
-    time_check = 0.0;
-    time_expand = 0.0;
-    time_out = 0.0;
-    time_sort = 0.0;
-#endif
-
     for (i = 0; i < n2; i++) cand[i] = i;
     biclique_enumerate(fp1, fp2, G, cand, n2);
     utime = get_cur_time() - stime;
 
-#ifdef VERBOSE 
-    printf("find biclique %f seconds\n", utime);
-#endif
-
-#ifdef PERFORMANCE
-    fprintf(fp2, "\n");
-    fprintf(fp2, "%lld tree nodes\n", node_num);
-    fprintf(fp2, "%f readin\n", time_in);
-    fprintf(fp2, "%f expand\n", time_expand);
-    fprintf(fp2, "%f check\n", time_check);
-    fprintf(fp2, "%f output\n", time_out);
-    fprintf(fp2, "%f sorting\n", time_sort);
-#endif
     fprintf(fp2, "%f total time\n", utime);
 
     if (fp1 != NULL) fclose(fp1);
