@@ -6,10 +6,10 @@
 #' @param filename input file name
 #' 
 #' @examples
-#' bic("example1.el")
+#' biclique("example1.el")
 #'
 #' @export
-bic <- function(filename)
+biclique <- function(filename)
 {
     .Call("R_biclique", 
           as.character(filename))

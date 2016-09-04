@@ -1,10 +1,14 @@
 Package: biclique
 Type: Package
-Title: What the Package Does (Title Case)
+Title: An R package to compute bicliques
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Authors@R: c(
+    person("Yuping", "Lu", , "yupinglu@utk.edu", c("aut", "cre"))
+    )
+Description: It's usde to compute bicliques
+Depends:
+    R (>= 3.1)
+License: GPL-2
+URL: https://github.com/YupingLu/biclique
 LazyData: TRUE
 RoxygenNote: 5.0.1
