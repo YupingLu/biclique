@@ -26,11 +26,23 @@ char *outfn;
 int DEGREE;
 char INPUT;
 
-void maximal_biclique(char *fn, BiGraph *G)
+/** 
+ *  Finalizer that only clears R pointer
+ */
+static void finalizer0(SEXP Rptr)
+{
+    void *ptr = (void *) R_ExternalPtrAddr(Rptr);
+    if (NULL == ptr) {
+        return;
+    } else {
+        R_ClearExternalPtr(Rptr);
+    }
+}
+
+void maximal_biclique(char *fn, BiGraph *G, int *profile)
 {
     FILE *fp1=NULL;
-    int *profile = (int *) malloc ((3*(G->_num_v1*G->_num_v2) + 9) * sizeof (int));
-
+    
     int n2 = G->_num_v2;
     vid_t cand[n2];
     int i;
@@ -44,10 +56,6 @@ void maximal_biclique(char *fn, BiGraph *G)
     biclique_enumerate(fp1, profile, G, cand, n2);
 
     if (fp1 != NULL) fclose(fp1);
-    for(i = 0; i < profile[0]; i++)
-        Rprintf("%d\n", profile[i]);
-
-    Free(profile);
 }
 
 /**
@@ -58,6 +66,7 @@ void maximal_biclique(char *fn, BiGraph *G)
 SEXP R_biclique(SEXP R_file)
 {
     BiGraph *G;
+    SEXP R_data;
 
     const char *filepath = CHARPT(R_file, 0);
     strcpy(infn, filepath);
@@ -82,9 +91,38 @@ SEXP R_biclique(SEXP R_file)
     if (DEGREE) {
         bigraph_degreelist_out(stdout, G);
     }
-    else maximal_biclique(outfn, G);
+    else {
+        SEXP profile_data;
+        int *profile = (int *) malloc ((3*(G->_num_v1*G->_num_v2) + 9) * sizeof (int));
+        maximal_biclique(outfn, G, profile);
+
+        newRptr(profile, profile_data, finalizer0);
+        R_data = copy_data (profile_data);
+
+        UNPROTECT(1);
+        Free(profile);
+    }
 
     bigraph_free(G);
 
-    return R_NilValue;
+    return R_data;
+}
+
+
+/** 
+ * Copy data from C memory to R memory, return is R_data
+ */
+SEXP copy_data (SEXP C_data)
+{
+    SEXP R_data;  
+    int *data = R_ExternalPtrAddr(C_data);
+    int nelems = data[0];  /* get the number of elements to copy */
+    int pos;
+
+    R_data = PROTECT(allocVector(INTSXP, nelems));
+    for(pos = 0; pos < nelems; pos++)
+        INTEGER(R_data)[pos] = data[pos];
+
+    UNPROTECT(1);
+    return R_data;
 }
