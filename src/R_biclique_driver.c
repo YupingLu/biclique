@@ -29,8 +29,8 @@ char INPUT;
 void maximal_biclique(char *fn, BiGraph *G)
 {
     FILE *fp1=NULL;
-    int *profile;
- 
+    int *profile = (int *) malloc ((3*(G->_num_v1*G->_num_v2) + 9) * sizeof (int));
+
     int n2 = G->_num_v2;
     vid_t cand[n2];
     int i;

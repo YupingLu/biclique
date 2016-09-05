@@ -57,7 +57,7 @@ typedef unsigned long num_t;
     fprintf(fp, "Size of vertex max biclique : (%d, %d)\n", vi, vj);
     fprintf(fp, "\n");
 }*/
-void biclique_profile_out(int *profle, BiGraph *G, num_t *nclique)
+void biclique_profile_out(int *profile, BiGraph *G, num_t *nclique)
 {
     unsigned int n1 = G->_num_v1;
     unsigned int n2 = G->_num_v2;
@@ -66,7 +66,6 @@ void biclique_profile_out(int *profle, BiGraph *G, num_t *nclique)
     int vi=0, vj=0;
     int i, j, length;
 
-    profile = (int *) malloc ((3*(n1*n2) + 9) * sizeof (int));
     length = 0;
     profile[length++] = 0;
  
