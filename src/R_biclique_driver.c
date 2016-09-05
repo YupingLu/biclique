@@ -28,9 +28,9 @@ char INPUT;
 
 void maximal_biclique(char *fn, BiGraph *G)
 {
-    FILE *fp1=NULL, *fp2;
-    char fname[100];
-    double utime;
+    FILE *fp1=NULL;
+    int *profile;
+ 
     int n2 = G->_num_v2;
     vid_t cand[n2];
     int i;
@@ -39,14 +39,15 @@ void maximal_biclique(char *fn, BiGraph *G)
         if (fn != NULL) { fp1 = fopen(fn, "w"); }
         else { fp1 = stdout; }
     }
-    sprintf(fname, "%s.profile", infn);
-    fp2 = fopen(fname, "w");
 
     for (i = 0; i < n2; i++) cand[i] = i;
-    biclique_enumerate(fp1, fp2, G, cand, n2);
+    biclique_enumerate(fp1, profile, G, cand, n2);
 
     if (fp1 != NULL) fclose(fp1);
-    fclose(fp2);
+    for(i = 0; i < profile[0]; i++)
+        Rprintf("%d\n", profile[i]);
+
+    Free(profile);
 }
 
 /**

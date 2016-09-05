@@ -10,7 +10,7 @@
 /* ---------------------------------------- *
  * Biclique Enumeration Functions           *
  * ---------------------------------------- */
-void biclique_enumerate(FILE *fp, FILE *fp2, BiGraph *G, vid_t *, int);
+void biclique_enumerate(FILE *fp, int *profile, BiGraph *G, vid_t *, int);
 
 #endif
 

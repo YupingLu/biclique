@@ -4,7 +4,6 @@
  * Last Update: August 2007
  */
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -27,7 +26,7 @@ typedef unsigned long num_t;
  *   Print out the profile, no. of left/right vertices, no. of   *
  *   edges, no.of biclique, size of vertex/edge maximum biclique *
  * ------------------------------------------------------------- */
-void biclique_profile_out(FILE *fp, BiGraph *G, num_t *nclique)
+/*void biclique_profile_out(FILE *fp, BiGraph *G, num_t *nclique)
 {
     unsigned int n1 = G->_num_v1;
     unsigned int n2 = G->_num_v2;
@@ -57,8 +56,55 @@ void biclique_profile_out(FILE *fp, BiGraph *G, num_t *nclique)
     fprintf(fp, "Size of edge max biclique   : (%d, %d)\n", ei, ej);
     fprintf(fp, "Size of vertex max biclique : (%d, %d)\n", vi, vj);
     fprintf(fp, "\n");
-}
+}*/
+void biclique_profile_out(int *profle, BiGraph *G, num_t *nclique)
+{
+    unsigned int n1 = G->_num_v1;
+    unsigned int n2 = G->_num_v2;
+    num_t num, sum=0;
+    int ei=0, ej=0;
+    int vi=0, vj=0;
+    int i, j, length;
 
+    profile = (int *) malloc ((3*(n1*n2) + 9) * sizeof (int));
+    length = 0;
+    profile[length++] = 0;
+ 
+    //fprintf(fp, "|Right Vertex|\t|Left Vertex|\tNumber\n");
+    for (i = 1; i <= n2; i++) {
+        for (j = 1; j <= n1; j++) {
+            num = nclique[(i-1)*n1+(j-1)];
+            if (num > 0) {
+                profile[length++] = i;
+                profile[length++] = j;
+                profile[length++] = num;
+                //fprintf(fp, "%d\t%d\t%lu\n", i, j, num);
+                sum += num;
+                if (i*j > ei*ej) { ei = i; ej = j; }
+                if (i+j > vi+vj) { vi = i; vj = j; }
+            }
+        }
+    }
+    
+    profile[length++] = n1;
+    profile[length++] = n2;
+    profile[length++] = G->_num_edges;
+    profile[length++] = sum;
+    profile[length++] = ei;
+    profile[length++] = ej;
+    profile[length++] = vi;
+    profile[length++] = vj;
+    profile[0] = length;
+
+    /*fprintf(fp, "\n");
+    fprintf(fp, "Number of left vertices     : %d\n", n1);
+    fprintf(fp, "Number of right vertices    : %d\n", n2);
+    fprintf(fp, "Number of edges             : %d\n", G->_num_edges);
+    fprintf(fp, "Number of bicliques         : %lu\n", sum);
+    fprintf(fp, "Size of edge max biclique   : (%d, %d)\n", ei, ej);
+    fprintf(fp, "Size of vertex max biclique : (%d, %d)\n", vi, vj);
+    fprintf(fp, "\n");*/
+}
 
 
 /* ------------------------------------------------------------- *
@@ -345,7 +391,7 @@ void biclique_find_improve(FILE *fp, BiGraph *G, num_t *nclique, \
 /* --------------------------------------------------- *
  *  Biclique Enumerating Main Function 
  * --------------------------------------------------- */
-void biclique_enumerate(FILE *fp1, FILE *fp2, BiGraph *G, \
+void biclique_enumerate(FILE *fp1, int *profile, BiGraph *G, \
                 vid_t *cand, int lcand)
 {
     unsigned int n1 = G->_num_v1;
@@ -388,7 +434,7 @@ void biclique_enumerate(FILE *fp1, FILE *fp2, BiGraph *G, \
     }
     
     /* Print out the profile of maximal bicliques */
-    biclique_profile_out(fp2, G, nclique);
+    biclique_profile_out(profile, G, nclique);
 
     /* Free memory */
     free(nclique);
