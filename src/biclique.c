@@ -86,6 +86,24 @@ void biclique_out(FILE *fp, BiGraph *G, vid_t *right, \
 }
 
 
+void biclique_out(FILE *fp, BiGraph *G, vid_t *right, \
+                int nr, vid_t *left, int nl)
+{
+    int i;
+
+    for (i = 0; i < nr-1; i++) {
+        fprintf(fp, "%s\t", G->_label_v2[right[i]]);
+    }
+    fprintf(fp, "%s\n", G->_label_v2[right[i]]);
+    for (i = 0; i < nl-1; i++) {
+        fprintf(fp, "%s\t", G->_label_v1[left[i]]);
+    }
+    fprintf(fp, "%s\n", G->_label_v1[left[i]]);
+    fprintf(fp, "\n");
+}
+
+
+
 
 /* ------------------------------------------------------------- *
  * Function: searchtreenode_out()                                *
