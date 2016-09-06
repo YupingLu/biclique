@@ -32,5 +32,7 @@ biclique <- function(filename)  #may change this function name to bic.profile
     profile = paste(profile, "Size of vertex max biclique : ", "(", profile.raw[nelems-1], ",", profile.raw[nelems], ")", "\n", sep="")
 
     # print profile
-    cat(profile)
+    on.exit(cat(profile))
+    
+    invisible()
 }
