@@ -19,6 +19,11 @@ int LLEAST, RLEAST;
 int VERSION;
 int PRINT;
 
+int *nnr;
+int *nnl;
+int **g_right;
+int **g_left;
+
 typedef unsigned long num_t;
 
 /* ------------------------------------------------------------- *
@@ -69,7 +74,7 @@ void biclique_profile_out(int *profile, BiGraph *G, num_t *nclique)
  * Function: biclique_out()                                      *
  *   Print out a biclique: left and right vertices on two lines  *
  * ------------------------------------------------------------- */
-void biclique_out(FILE *fp, BiGraph *G, vid_t *right, \
+/*void biclique_out(FILE *fp, BiGraph *G, vid_t *right, \
                 int nr, vid_t *left, int nl)
 {
     int i;
@@ -83,27 +88,29 @@ void biclique_out(FILE *fp, BiGraph *G, vid_t *right, \
     }
     fprintf(fp, "%s\n", G->_label_v1[left[i]]);
     fprintf(fp, "\n");
-}
-
+}*/
 
 void biclique_out(FILE *fp, BiGraph *G, vid_t *right, \
                 int nr, vid_t *left, int nl)
 {
     int i;
 
-    for (i = 0; i < nr-1; i++) {
-        fprintf(fp, "%s\t", G->_label_v2[right[i]]);
+    g_right[nnr[0]] = (int *) malloc (nr * sizeof (int));
+    for (i = 0; i < nr; i++) {
+        g_right[nnr[0]][i] = right[i];
     }
-    fprintf(fp, "%s\n", G->_label_v2[right[i]]);
-    for (i = 0; i < nl-1; i++) {
-        fprintf(fp, "%s\t", G->_label_v1[left[i]]);
+
+    g_left[nnl[0]] = (int *) malloc (nl * sizeof (int));
+     for (i = 0; i < nl; i++) {
+        g_left[nnl[0]][i] = left[i];
     }
-    fprintf(fp, "%s\n", G->_label_v1[left[i]]);
-    fprintf(fp, "\n");
+
+    nnr[0]++;
+    nnr[nnr[0]] = nr;
+
+    nnl[0]++;
+    nnl[nnl[0]] = nl;
 }
-
-
-
 
 /* ------------------------------------------------------------- *
  * Function: searchtreenode_out()                                *

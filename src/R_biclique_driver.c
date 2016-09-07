@@ -20,6 +20,12 @@ extern int PRINT;
 extern long long node_num;
 extern int SORT_TYPE;
 
+// Global variables to store the bicliques
+extern int *nnr;
+extern int *nnl;
+extern int **g_right;
+extern int **g_left;
+
 FILE *fp;
 char infn[100];
 char *outfn;
@@ -42,20 +48,47 @@ static void finalizer0(SEXP Rptr)
 void maximal_biclique(char *fn, BiGraph *G, int *profile)
 {
     FILE *fp1=NULL;
+    // number of nodes in each...
+    nnr = (int *) calloc ((G->_num_v2 + 1), sizeof (int));
+    nnl = (int *) calloc ((G->_num_v2 + 1), sizeof (int));
+
+    g_right = (int **) calloc (G->_num_v2 * sizeof (int*));
+    g_left = (int **) calloc (G->_num_v2 * sizeof (int*));
     
     int n2 = G->_num_v2;
     vid_t cand[n2];
     int i;
 
-    if (PRINT) { 
-        if (fn != NULL) { fp1 = fopen(fn, "w"); }
-        else { fp1 = stdout; }
-    }
-
     for (i = 0; i < n2; i++) cand[i] = i;
     biclique_enumerate(fp1, profile, G, cand, n2);
 
-    if (fp1 != NULL) fclose(fp1);
+    // print the bicliques
+    int j;
+    for(j = 0; j < nnr[0]; j++) {
+        for (i = 0; i < nnr[j+1]-1; i++) {
+            Rprintf("%s\t", G->_label_v2[g_right[j][i]]);
+        }
+        Rprintf("%s\n", G->_label_v2[g_right[j][nnr[j+1]]]);
+        for (i = 0; i < nnl[j+1]-1; i++) {
+            Rprintf("%s\t", G->_label_v1[g_left[j][i]]);
+        }
+        Rprintf("%s\n", G->_label_v1[g_left[j][nnl[j+1]]]);
+        
+        Rprintf("\n");
+    }
+    
+    // free memory
+    for (i = 0; i < nnr[0]; i++) {
+        Free(g_right[i]);
+    }
+    for (i = 0; i < nnl[0]; i++) {
+        Free(g_left[i]);
+    }
+    Free(g_right);
+    Free(g_left);
+    Free(nnr);
+    Free(nnl);
+    
 }
 
 /**
@@ -79,7 +112,7 @@ SEXP R_biclique(SEXP R_file)
     RLEAST = 1;
     DEGREE = 0;
     VERSION = 1;
-    PRINT = 0;
+    PRINT = 1;
     outfn = NULL;
     SORT_TYPE = 1;
     INPUT = 0;  // default = edge list = 0
