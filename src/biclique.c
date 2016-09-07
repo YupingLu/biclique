@@ -19,11 +19,6 @@ int LLEAST, RLEAST;
 int VERSION;
 int PRINT;
 
-int *nnr;
-int *nnl;
-int **g_right;
-int **g_left;
-
 typedef unsigned long num_t;
 
 /* ------------------------------------------------------------- *
@@ -90,19 +85,22 @@ void biclique_profile_out(int *profile, BiGraph *G, num_t *nclique)
     fprintf(fp, "\n");
 }*/
 
-void biclique_out(FILE *fp, BiGraph *G, vid_t *right, \
-                int nr, vid_t *left, int nl)
+void biclique_out(int **g_right, int **g_left, FILE *fp, BiGraph *G, vid_t *right, \
+                int nr, vid_t *left, int nl, int *nnr, int *nnl)
 {
     int i;
 
-    g_right[nnr[0]] = (int *) malloc (nr * sizeof (int));
+    printf("Test %d \n", nnr[0]);
+
+    *g_right = (int *) malloc (nr * sizeof (int));
     for (i = 0; i < nr; i++) {
-        g_right[nnr[0]][i] = right[i];
+        (*g_right)[i] = right[i];
+        printf("%d \n", (*g_right)[i]);
     }
 
-    g_left[nnl[0]] = (int *) malloc (nl * sizeof (int));
+    *g_left = (int *) malloc (nl * sizeof (int));
      for (i = 0; i < nl; i++) {
-        g_left[nnl[0]][i] = left[i];
+        (*g_left)[i] = left[i];
     }
 
     nnr[0]++;
@@ -153,8 +151,8 @@ void searchtreenode_out2(BiGraph *G, vid_t *clique, vid_t *right, \
  *  Function: biclique_find_basic()
  *    The basic version of biclique_find().
  * --------------------------------------------------- */
-void biclique_find_basic(FILE *fp, BiGraph *G, num_t *nclique, \
-        vid_t *clique, int nc, vid_t *left, int nl, vid_t *right, int ne, int ce)
+void biclique_find_basic(int **g_right, int **g_left, FILE *fp, BiGraph *G, num_t *nclique, \
+        vid_t *clique, int nc, vid_t *left, int nl, vid_t *right, int ne, int ce, int *nnr, int *nnl)
 {
     unsigned int n1 = G->_num_v1;
     vid_t new_left[nl];
@@ -220,13 +218,21 @@ void biclique_find_basic(FILE *fp, BiGraph *G, num_t *nclique, \
         /* Print out the found maximal biclique */
         if (new_nc >= RLEAST && new_nl >= LLEAST) {
             nclique[(new_nc-1)*n1+(new_nl-1)]++;
-            if (PRINT) biclique_out(fp, G, clique, new_nc, new_left, new_nl);
+            if (PRINT) {
+                biclique_out(&(g_right[nnr[0]]), &(g_left[nnl[0]]), fp, G, clique, new_nc, new_left, new_nl, nnr, nnl);
+
+                printf("Test1 %d \n", nnr[0]);
+                int i;
+                for (i = 0; i < nnr[nnr[0]]; i++) {
+                    printf("%d \n", g_right[nnr[0]-1][i]);
+                }
+            }
         }
         
         /* Recursively find bicliques */
         if ((new_ne < new_ce) && (new_nc+(new_ce-new_ne) >= RLEAST)) {
-            biclique_find_basic(fp, G, nclique, clique, new_nc, \
-                new_left, new_nl, new_right, new_ne, new_ce);
+            biclique_find_basic(g_right, g_left, fp, G, nclique, clique, new_nc, \
+                new_left, new_nl, new_right, new_ne, new_ce, nnr, nnl);
         }
         else {
      }
@@ -244,138 +250,13 @@ void biclique_find_basic(FILE *fp, BiGraph *G, num_t *nclique, \
  *  Function: biclique_find_improve()
  *    The Improved Version of biclique_find().
  * --------------------------------------------------- */
-void biclique_find_improve(FILE *fp, BiGraph *G, num_t *nclique, \
-        vid_t *clique, int nc, vid_t *left, int nl, vid_t *right, int ne, int ce)
-{
-    unsigned int n1 = G->_num_v1;
-    vid_t new_left[nl];
-    vid_t new_right[ce];
-    vid_t u, v, w, i, j, k;
-    int new_nc, new_nl, new_ne, new_ce;
-    int count, is_maximal=1;
-    int x, noc[ce-ne];
-
-    // Improvement II
-    // divide new_left to two parts: in L' and not in L'
-    // ----------------------------
-    // |  L'          |   not L'  |
-    // ----------------------------
-    // ^              ^           ^
-    // new_nl ->          <- not_nl  
-    // L'=new_left[0..new_nl-1], ~L'=new_left[new_nl,nl-1]
-    int not_nl;  // position of not_left
-    int nn;      // number of vertices directly go to not
-    // End
- 
-    /* Same operations as v2 on each candidate in order */
-    while (ne < ce) {
-    
-        /* Choose the next candidate in P */
-        v = right[ne];
-
-        /* Choose one vertex from candidate set */
-        new_nc = nc;
-        clique[new_nc++] = v;
-        
-        /* Set right vertices in clique */
-        memset(new_left, -1, nl*sizeof(vid_t));
-        new_nl = 0; not_nl = nl;
-        for (j = 0; j < nl; j++) {
-            u = left[j];
-            if (bigraph_edge_exists(G, u, v))
-                new_left[new_nl++] = u;
-            else new_left[not_nl--] = u;
-        }
-
-        /* Set right vertices in not */
-        memset(new_right, -1, ce*sizeof(vid_t));
-        new_ne = 0;
-        is_maximal = 1;
-        for (j = 0; j < ne; j++) {
-            w = right[j];
-            count = 0;
-            for (k = 0; k < new_nl; k++) {
-                u = new_left[k];
-                if (bigraph_edge_exists(G, u, w)) count++;
-            }
-            if (count == new_nl) { is_maximal = 0; break; }
-            else if (count > 0) new_right[new_ne++] = w;
-        }
-
-        /* Stop this branch if it is not maximal */
-        if (!is_maximal) { 
-            ne++; continue;
-        }
-
-        /* Set right vertices in cand */
-        memset(noc, 0, (ce-ne)*sizeof(int));
-        new_ce = new_ne;
-        nn = 1; // number of vertice will be put in not when backtracking
-        for (j = ne+1; j < ce; j++) {
-            w = right[j];
-            /* count the connections to L */
-            count = 0;
-            for (k = 0; k < new_nl; k++) {
-                u = new_left[k];
-                if (bigraph_edge_exists(G, u, w)) count++;
-            }
-            if (count == new_nl) {
-                clique[new_nc++] = w;
-                // Improvement II
-                for (k = nl; k > not_nl; k--) {
-                        u = new_left[k];
-                        if (bigraph_edge_exists(G,u,w)) count++;
-                }
-                // switch such vertex with the one next to 
-                // the last picked vertex to biclique
-                if (count == new_nl) {
-                        right[j] = right[ne+nn]; 
-                        right[ne+nn] = w;
-                        nn++;
-                }
-            }
-            else if (count > 0)  { 
-                /* Improvement I: Sorting candidates in new_right */
-                x = new_ce-1;
-                while (x >= new_ne && noc[x-new_ne] > count) {
-                    noc[x+1-new_ne] = noc[x-new_ne];
-                    new_right[x+1] = new_right[x];
-                    x--;
-                }
-                noc[x+1-new_ne] = count;
-                new_right[x+1] = w;
-                new_ce++;
-            }
-        }
-
-        /* Print out the found maximal biclique */
-        if (new_nc >= RLEAST && new_nl >= LLEAST) {
-            nclique[(new_nc-1)*n1+(new_nl-1)]++;
-            if (PRINT) biclique_out(fp, G, clique, new_nc, new_left, new_nl);
-        }
-        
-        /* Recursively find bicliques */
-        if ((new_ne < new_ce) && (new_nc+(new_ce-new_ne) >= RLEAST)) {
-            biclique_find_basic(fp, G, nclique, clique, new_nc, \
-                new_left, new_nl, new_right, new_ne, new_ce);
-        }
-        else {
-        }
-        
-        /* Move v and other qualified vertics to former candidate set */
-        ne += nn;
-
-    }
-    
-    return;
-}
 
 
 /* --------------------------------------------------- *
  *  Biclique Enumerating Main Function 
  * --------------------------------------------------- */
-void biclique_enumerate(FILE *fp1, int *profile, BiGraph *G, \
-                vid_t *cand, int lcand)
+void biclique_enumerate(int **g_right, int **g_left, FILE *fp1, int *profile, BiGraph *G, \
+                vid_t *cand, int lcand, int *nnr, int *nnl)
 {
     unsigned int n1 = G->_num_v1;
     unsigned int n2 = G->_num_v2;
@@ -393,27 +274,13 @@ void biclique_enumerate(FILE *fp1, int *profile, BiGraph *G, \
  
     /* Call the recursive function to find maximal bicliques */
     if (VERSION == 1) {
-        biclique_find_basic(fp1, G, nclique, clique, 0, left, n1, right, 0, n2);
+        biclique_find_basic(g_right, g_left, fp1, G, nclique, clique, 0, left, n1, right, 0, n2, nnr, nnl);
     }
-    else if (VERSION == 2) {
-        /* Sort the candidate right vertices */
-        memset(noc, 0, n2*sizeof(int));
-        for (v = 0; v < n2; v++) {
-            tmpnoc = 0;
-            for (u = 0; u < n1; u++)
-                if (bigraph_edge_exists(G, u, v)) tmpnoc++;
-            /* Sorting candidates in new_right */
-            x = v - 1;
-            while (x >= 0 && noc[x] > tmpnoc) {
-                    noc[x+1] = noc[x];
-                    right[x+1] = right[x];
-                    x--;
-            }
-            noc[x+1] = tmpnoc;
-            right[x+1] = v;
-        }       
-//  bubble_sort_inc(right, 0, n2, noc);
-        biclique_find_improve(fp1, G, nclique, clique, 0, left, n1, right, 0, n2);
+
+    printf("Test2 %d \n", nnr[0]);
+    int i;
+    for (i = 0; i < nnr[nnr[0]]; i++) {
+        printf("%d \n", g_right[nnr[0]-1][i]);
     }
     
     /* Print out the profile of maximal bicliques */
