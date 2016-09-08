@@ -69,33 +69,14 @@ void biclique_profile_out(int *profile, BiGraph *G, num_t *nclique)
  * Function: biclique_out()                                      *
  *   Print out a biclique: left and right vertices on two lines  *
  * ------------------------------------------------------------- */
-/*void biclique_out(FILE *fp, BiGraph *G, vid_t *right, \
-                int nr, vid_t *left, int nl)
-{
-    int i;
-
-    for (i = 0; i < nr-1; i++) {
-        fprintf(fp, "%s\t", G->_label_v2[right[i]]);
-    }
-    fprintf(fp, "%s\n", G->_label_v2[right[i]]);
-    for (i = 0; i < nl-1; i++) {
-        fprintf(fp, "%s\t", G->_label_v1[left[i]]);
-    }
-    fprintf(fp, "%s\n", G->_label_v1[left[i]]);
-    fprintf(fp, "\n");
-}*/
-
 void biclique_out(int **g_right, int **g_left, FILE *fp, BiGraph *G, vid_t *right, \
                 int nr, vid_t *left, int nl, int *nnr, int *nnl)
 {
     int i;
 
-    printf("Test %d \n", nnr[0]);
-
     *g_right = (int *) malloc (nr * sizeof (int));
     for (i = 0; i < nr; i++) {
         (*g_right)[i] = right[i];
-        printf("%d \n", (*g_right)[i]);
     }
 
     *g_left = (int *) malloc (nl * sizeof (int));
@@ -220,12 +201,6 @@ void biclique_find_basic(int **g_right, int **g_left, FILE *fp, BiGraph *G, num_
             nclique[(new_nc-1)*n1+(new_nl-1)]++;
             if (PRINT) {
                 biclique_out(&(g_right[nnr[0]]), &(g_left[nnl[0]]), fp, G, clique, new_nc, new_left, new_nl, nnr, nnl);
-
-                printf("Test1 %d \n", nnr[0]);
-                int i;
-                for (i = 0; i < nnr[nnr[0]]; i++) {
-                    printf("%d \n", g_right[nnr[0]-1][i]);
-                }
             }
         }
         
@@ -275,12 +250,6 @@ void biclique_enumerate(int **g_right, int **g_left, FILE *fp1, int *profile, Bi
     /* Call the recursive function to find maximal bicliques */
     if (VERSION == 1) {
         biclique_find_basic(g_right, g_left, fp1, G, nclique, clique, 0, left, n1, right, 0, n2, nnr, nnl);
-    }
-
-    printf("Test2 %d \n", nnr[0]);
-    int i;
-    for (i = 0; i < nnr[nnr[0]]; i++) {
-        printf("%d \n", g_right[nnr[0]-1][i]);
     }
     
     /* Print out the profile of maximal bicliques */

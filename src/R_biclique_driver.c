@@ -42,27 +42,27 @@ static void finalizer0(SEXP Rptr)
 void maximal_biclique(char *fn, BiGraph *G, int *profile)
 {
     FILE *fp1=NULL;
-    // number of nodes in each...
-    int *nnr = (int *) calloc ((100 + 1), sizeof (int));
-    int *nnl = (int *) calloc ((100 + 1), sizeof (int));
-    REprintf("1 OK. \n");
-
-    int **g_right = (int **) malloc (100 * sizeof (int*));
-    int **g_left = (int **) malloc (100 * sizeof (int*));
-    REprintf("2 OK. \n");
-
     int n2 = G->_num_v2;
+    int n1 = G->_num_v1;
+
+    /* Allocate memory for nnr and nnl. 
+    * 1st element of nnr/nnl is the totoal number of bicliques
+    * other elements of nnr/nnl are the totoal number of nodes in each biclique
+    */
+    int *nnr = (int *) calloc ((n2 * n1 + 1), sizeof (int));
+    int *nnl = (int *) calloc ((n2 * n1 + 1), sizeof (int));
+    
+    /*
+    * Allocate memory for g_right and g_left. Biclique nodes in them.
+    */
+    int **g_right = (int **) malloc (n2 * n1 * sizeof (int*));
+    int **g_left = (int **) malloc (n2 * n1 * sizeof (int*));
+    
     vid_t cand[n2];
     int i;
 
     for (i = 0; i < n2; i++) cand[i] = i;
     biclique_enumerate(g_right, g_left, fp1, profile, G, cand, n2, nnr, nnl);
-    REprintf("3 OK. \n");
-
-    printf("Test3 %d \n", nnr[0]);
-    for (i = 0; i < nnr[nnr[0]]; i++) {
-        printf("%d \n", g_right[nnr[0]-1][i]);
-    }
 
     // print the bicliques
     int j;
@@ -90,8 +90,6 @@ void maximal_biclique(char *fn, BiGraph *G, int *profile)
     Free(g_left);
     Free(nnr);
     Free(nnl);
-    REprintf("Memory Freed. \n");
-    
 }
 
 /**
