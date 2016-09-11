@@ -28,7 +28,7 @@
 #define newRptr(ptr,Rptr,fin) PROTECT(Rptr = R_MakeExternalPtr(ptr, R_NilValue, R_NilValue)); R_RegisterCFinalizerEx(Rptr, fin, TRUE)
 /* newRptr(already_allocated_C_pointer, R_pointer_to_be_made_for_it, finalizer) */
 
-void maximal_biclique(char *fn, BiGraph *G, int *profile);
+void maximal_biclique(BiGraph *G, int *profile);
 SEXP copy_data (SEXP C_data);
 SEXP R_biclique(SEXP R_file);
 

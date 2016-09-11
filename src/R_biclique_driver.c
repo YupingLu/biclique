@@ -20,6 +20,10 @@ extern int PRINT;
 extern long long node_num;
 extern int SORT_TYPE;
 
+/* Global Variables */
+extern int *nnr;
+extern int *nnl;
+
 FILE *fp;
 char infn[100];
 char *outfn;
@@ -39,9 +43,8 @@ static void finalizer0(SEXP Rptr)
     }
 }
 
-void maximal_biclique(char *fn, BiGraph *G, int *profile)
+void maximal_biclique(BiGraph *G, int *profile)
 {
-    FILE *fp1=NULL;
     int n2 = G->_num_v2;
     int n1 = G->_num_v1;
 
@@ -49,8 +52,8 @@ void maximal_biclique(char *fn, BiGraph *G, int *profile)
     * 1st element of nnr/nnl is the totoal number of bicliques
     * other elements of nnr/nnl are the totoal number of nodes in each biclique
     */
-    int *nnr = (int *) calloc ((n2 * n1 + 1), sizeof (int));
-    int *nnl = (int *) calloc ((n2 * n1 + 1), sizeof (int));
+    nnr = (int *) calloc ((n2 * n1 + 1), sizeof (int));
+    nnl = (int *) calloc ((n2 * n1 + 1), sizeof (int));
     
     /*
     * Allocate memory for g_right and g_left. Biclique nodes in them.
@@ -62,7 +65,7 @@ void maximal_biclique(char *fn, BiGraph *G, int *profile)
     int i;
 
     for (i = 0; i < n2; i++) cand[i] = i;
-    biclique_enumerate(g_right, g_left, fp1, profile, G, cand, n2, nnr, nnl);
+    biclique_enumerate(g_right, g_left, profile, G, cand, n2);
 
     // print the bicliques
     int j;
@@ -112,9 +115,9 @@ SEXP R_biclique(SEXP R_file)
     LLEAST = 1;
     RLEAST = 1;
     DEGREE = 0;
-    VERSION = 1;
+    VERSION = 2;
     PRINT = 1;
-    outfn = NULL;
+    //outfn = NULL;
     SORT_TYPE = 1;
     INPUT = 0;  // default = edge list = 0
 
@@ -128,7 +131,7 @@ SEXP R_biclique(SEXP R_file)
     else {
         SEXP profile_data;
         int *profile = (int *) malloc ((3*(G->_num_v1*G->_num_v2) + 9) * sizeof (int));
-        maximal_biclique(outfn, G, profile);
+        maximal_biclique(G, profile);
 
         newRptr(profile, profile_data, finalizer0);
         R_data = copy_data (profile_data);
