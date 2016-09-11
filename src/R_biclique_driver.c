@@ -43,7 +43,7 @@ static void finalizer0(SEXP Rptr)
     }
 }
 
-void maximal_biclique(BiGraph *G, int *profile)
+void maximal_biclique(BiGraph *G, int *profile, int **g_right, int **g_left)
 {
     int n2 = G->_num_v2;
     int n1 = G->_num_v1;
@@ -55,44 +55,11 @@ void maximal_biclique(BiGraph *G, int *profile)
     nnr = (int *) calloc ((n2 * n1 + 1), sizeof (int));
     nnl = (int *) calloc ((n2 * n1 + 1), sizeof (int));
     
-    /*
-    * Allocate memory for g_right and g_left. Biclique nodes in them.
-    */
-    int **g_right = (int **) malloc (n2 * n1 * sizeof (int*));
-    int **g_left = (int **) malloc (n2 * n1 * sizeof (int*));
-    
     vid_t cand[n2];
     int i;
 
     for (i = 0; i < n2; i++) cand[i] = i;
     biclique_enumerate(g_right, g_left, profile, G, cand, n2);
-
-    // print the bicliques
-    int j;
-    for(j = 0; j < nnr[0]; j++) {
-        for (i = 0; i < nnr[j+1]; i++) {
-            Rprintf("%s\t", G->_label_v2[g_right[j][i]]);
-        }
-
-        for (i = 0; i < nnl[j+1]; i++) {
-            Rprintf("%s\t", G->_label_v1[g_left[j][i]]);
-        }
-        
-        Rprintf("\n");
-    }
-    
-    // free memory
-    for (i = 0; i < nnr[0]; i++) {
-        Free(g_right[i]);
-        
-    }
-    for (i = 0; i < nnl[0]; i++) {
-        Free(g_left[i]);
-    }
-    Free(g_right);
-    Free(g_left);
-    Free(nnr);
-    Free(nnl);
 }
 
 /**
@@ -125,19 +92,79 @@ SEXP R_biclique(SEXP R_file)
     else if (INPUT==1) G = bigraph_binarymatrix_in(fp);
     fclose(fp);
 
+    int n2 = G->_num_v2;
+    int n1 = G->_num_v1;
+
     if (DEGREE) {
         bigraph_degreelist_out(stdout, G);
     }
     else {
         SEXP profile_data;
-        int *profile = (int *) malloc ((3*(G->_num_v1*G->_num_v2) + 9) * sizeof (int));
-        maximal_biclique(G, profile);
+        int *profile = (int *) malloc ((3*(n1 * n2) + 9) * sizeof (int));
+
+        SEXP R_biclique_right, R_biclique_left;
+        R_data = PROTECT(allocVector(VECSXP, 3));
+
+        /*
+        * Allocate memory for g_right and g_left. Biclique nodes in them.
+        */
+        int **g_right = (int **) malloc (n2 * n1 * sizeof (int*));
+        int **g_left = (int **) malloc (n2 * n1 * sizeof (int*));
+
+        maximal_biclique(G, profile, g_right, g_left);
+
+        R_biclique_right = PROTECT(allocVector(VECSXP, nnr[0]));
+        R_biclique_left = PROTECT(allocVector(VECSXP, nnl[0]));
+
+        // copy the bicliques to R
+        int i, j;
+        for(j = 0; j < nnr[0]; j++) {
+
+            // Allocate temp R memory
+            SEXP R_biclique1 = PROTECT(allocVector(STRSXP, nnr[j+1]));
+            SEXP R_biclique2 = PROTECT(allocVector(STRSXP, nnl[j+1]));
+
+            for (i = 0; i < nnr[j+1]; i++) {
+                //Rprintf("%s\t", G->_label_v2[g_right[j][i]]);
+                SET_STRING_ELT(R_biclique1, i, mkChar((char *)(G->_label_v2[g_right[j][i]])));
+            }
+
+            for (i = 0; i < nnl[j+1]; i++) {
+                //Rprintf("%s\t", G->_label_v1[g_left[j][i]]);
+                SET_STRING_ELT(R_biclique2, i, mkChar((char *)(G->_label_v1[g_left[j][i]])));
+            }
+
+            SET_VECTOR_ELT(R_biclique_right, j, R_biclique1); 
+            SET_VECTOR_ELT(R_biclique_left, j, R_biclique2);           
+            
+            UNPROTECT(2);
+        }
+
+        // Add cliques to the R_data list
+        SET_VECTOR_ELT(R_data, 0, R_biclique_right);
+        SET_VECTOR_ELT(R_data, 1, R_biclique_left);
+
+        UNPROTECT(2);
+        // free memory
+        for (i = 0; i < nnr[0]; i++) {
+            Free(g_right[i]);
+            
+        }
+        for (i = 0; i < nnl[0]; i++) {
+            Free(g_left[i]);
+        }
+        Free(g_right);
+        Free(g_left);
+        Free(nnr);
+        Free(nnl);
 
         newRptr(profile, profile_data, finalizer0);
-        R_data = copy_data (profile_data);
-
+        // Add profile to the R_data list
+        SET_VECTOR_ELT(R_data, 2, copy_data (profile_data));
         UNPROTECT(1);
         Free(profile);
+
+        UNPROTECT(1);
     }
 
     bigraph_free(G);

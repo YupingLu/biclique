@@ -11,8 +11,11 @@
 #' @export
 biclique <- function(filename)  #may change this function name to bic.profile
 {
+    # Get raw data list
+    data.raw = .Call("R_biclique", as.character(filename))
+
     # Get profile raw data
-    profile.raw = .Call("R_biclique", as.character(filename))
+    profile.raw = data.raw[[3]]
     # the number of elements in profile raw data
     nelems = profile.raw[1]
 
@@ -33,6 +36,15 @@ biclique <- function(filename)  #may change this function name to bic.profile
 
     # print profile
     on.exit(cat(profile))
-    
-    invisible()
+
+    # unlist biclique lists
+    bi = list()
+    for(i in 1:profile.raw[nelems-4]){
+      temp1 = unlist(data.raw[[1]][[i]])
+      temp2 = unlist(data.raw[[2]][[i]])
+      bi[[i]] = c(temp1, temp2)
+    }
+
+    # returned are the bicliques
+    invisible(bi)
 }
