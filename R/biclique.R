@@ -4,15 +4,24 @@
 #' Biclique enumeration
 #' 
 #' @param filename input file name
+#' @param lleast 1
+#' @param rleast 1
+#' @param version 1
+#' @param getclique 1
+#' @param filetype 0
 #' 
 #' @examples
-#' biclique("example1.el")
+#' bicliques = biclique("example1.el")
 #'
 #' @export
-biclique <- function(filename)  #may change this function name to bic.profile
+biclique <- function(filename, lleast = 1, rleast = 1, version = 1, getclique = 1, filetype = 0)  #may change this function name to bic.profile
 {
+    # parameters for R_biclique
+    isdegree = 0
+
     # Get raw data list
-    data.raw = .Call("R_biclique", as.character(filename))
+    data.raw = .Call("R_biclique", as.character(filename), as.integer(lleast), as.integer(rleast), as.integer(isdegree),
+                                   as.integer(version), as.integer(getclique), as.integer(filetype))
 
     # Get profile raw data
     profile.raw = data.raw[[3]]
@@ -23,7 +32,7 @@ biclique <- function(filename)  #may change this function name to bic.profile
     profile = paste("|Right Vertex|\t|Left Vertex|\tNumber\n")
 
    	for (i in seq(1, nelems-9, 3)){
-   		profile = paste(profile, profile.raw[i+1], "\t", profile.raw[i+2], "\t", profile.raw[i+3], "\n", sep="")
+   	    profile = paste(profile, profile.raw[i+1], "\t", profile.raw[i+2], "\t", profile.raw[i+3], "\n", sep="")
    	}
 
    	profile = paste(profile, "\n", sep="")
@@ -40,11 +49,43 @@ biclique <- function(filename)  #may change this function name to bic.profile
     # unlist biclique lists
     bi = list()
     for(i in 1:profile.raw[nelems-4]){
-      temp1 = unlist(data.raw[[1]][[i]])
-      temp2 = unlist(data.raw[[2]][[i]])
-      bi[[i]] = c(temp1, temp2)
+        temp1 = unlist(data.raw[[1]][[i]])
+        temp2 = unlist(data.raw[[2]][[i]])
+        bi[[i]] = c(temp1, temp2)
     }
 
     # returned are the bicliques
     invisible(bi)
+}
+
+
+#' @title bi.degree
+#'
+#' @description 
+#' Get the degree list
+#' 
+#' @param filename input file name
+#' @param filetype 0
+#' 
+#' @examples
+#' degreelist = bi.degree("example1.el")
+#'
+#' @export
+bi.degree <- function(filename, filetype = 0)
+{
+    # parameters for R_biclique
+    lleast = 1
+    rleast = 1
+    isdegree = 1
+    version = 1 
+    getclique = 1
+
+    degreelist = .Call("R_biclique", as.character(filename), as.integer(lleast), as.integer(rleast), as.integer(isdegree),
+                                     as.integer(version), as.integer(getclique), as.integer(filetype))
+
+    degree = unlist(degreelist)
+    w = data.frame(degree)
+
+    # returned are the biclique degree data.frame
+    invisible(w)
 }

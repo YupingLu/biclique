@@ -31,6 +31,6 @@
 void maximal_biclique(BiGraph *G, int *profile, int **g_right, int **g_left);
 
 SEXP copy_data (SEXP C_data);
-SEXP R_biclique(SEXP R_file);
+SEXP R_biclique(SEXP R_file, SEXP R_lleast, SEXP R_rleast, SEXP R_degree, SEXP R_version, SEXP R_print, SEXP R_input);
 
 #endif

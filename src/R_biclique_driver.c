@@ -67,7 +67,7 @@ void maximal_biclique(BiGraph *G, int *profile, int **g_right, int **g_left)
  * Two formats are supported: bel and bmat
  * If start and count is not specified, a whole list is returned.
  */
-SEXP R_biclique(SEXP R_file)
+SEXP R_biclique(SEXP R_file, SEXP R_lleast, SEXP R_rleast, SEXP R_degree, SEXP R_version, SEXP R_print, SEXP R_input)
 {
     BiGraph *G;
     SEXP R_data;
@@ -79,14 +79,14 @@ SEXP R_biclique(SEXP R_file)
         return R_NilValue;
     }
 
-    LLEAST = 1;
-    RLEAST = 1;
-    DEGREE = 0;
-    VERSION = 2;
-    PRINT = 1;
-    //outfn = NULL;
+    // Set Global variables.
+    LLEAST = asInteger(R_lleast);
+    RLEAST = asInteger(R_rleast);
+    DEGREE = asInteger(R_degree);
+    VERSION = asInteger(R_version);
+    PRINT = asInteger(R_print);
+    INPUT = asInteger(R_input);  // default = edge list = 0
     SORT_TYPE = 1;
-    INPUT = 0;  // default = edge list = 0
 
     if (INPUT==0) G = bigraph_edgelist_in(fp);
     else if (INPUT==1) G = bigraph_binarymatrix_in(fp);
@@ -96,7 +96,24 @@ SEXP R_biclique(SEXP R_file)
     int n1 = G->_num_v1;
 
     if (DEGREE) {
-        bigraph_degreelist_out(stdout, G);
+        int i;
+        // Get the degreelist
+        R_data = PROTECT(allocVector(VECSXP, n1+n2));
+        SEXP list_names = PROTECT(allocVector(STRSXP, n1+n2));
+        for (i = 0; i < n1; i++) {
+            SET_VECTOR_ELT(R_data, i, ScalarInteger(bigraph_degree_v1(G, i)));
+            SET_STRING_ELT(list_names, i, mkChar(G->_label_v1[i]));
+        }
+        for (i = 0; i < n2; i++) {
+            SET_VECTOR_ELT(R_data, n1+i, ScalarInteger(bigraph_degree_v2(G, i)));
+            SET_STRING_ELT(list_names, n1+i, mkChar(G->_label_v2[i]));
+        }
+
+        // set list names
+        setAttrib(R_data, R_NamesSymbol, list_names);
+        // free memory
+        UNPROTECT(2);
+
     }
     else {
         SEXP profile_data;

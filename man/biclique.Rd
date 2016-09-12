@@ -6,10 +6,21 @@
 \alias{biclique-package}
 \title{biclique}
 \usage{
-biclique(filename)
+biclique(filename, lleast = 1, rleast = 1, version = 1, getclique = 1,
+  filetype = 0)
 }
 \arguments{
 \item{filename}{input file name}
+
+\item{lleast}{1}
+
+\item{rleast}{1}
+
+\item{version}{1}
+
+\item{getclique}{1}
+
+\item{filetype}{0}
 }
 \description{
 Biclique enumeration
@@ -17,7 +28,7 @@ Biclique enumeration
 biclique package.
 }
 \examples{
-biclique("example1.el")
+bicliques = biclique("example1.el")
 
 }
 \author{
