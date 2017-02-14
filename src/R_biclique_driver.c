@@ -7,7 +7,7 @@
  * Copyright 2016-2017
  * Department of Computer Science, University of Tennessee, Knoxville
  *
- * Last modified: September 2016
+ * Last modified: February 2017
  *
  */
 

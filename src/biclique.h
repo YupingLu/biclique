@@ -1,6 +1,7 @@
 /* Enumerate biclique in bipartite graph
  * Author: Yun Zhang
  * Date: September 2006
+ * Last modified: February 2017
  */
 
 #ifndef __BICLIQUE_H

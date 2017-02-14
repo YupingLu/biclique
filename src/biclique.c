@@ -1,7 +1,7 @@
 /* Enumerate biclique in bipartite graphs
  * Author: Yun Zhang
  * Created: September 2006
- * Last Update: August 2007
+ * Last Update: February 2017
  */
 
 #include <stdio.h>

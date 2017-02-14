@@ -1,7 +1,7 @@
 /* Header file of Sorting algorithms for Biclique
  * Author: Yun Zhang
  * Created: August 2007
- * Last Update: August 2007
+ * Last modified: February 2017
  */
 
 #ifndef __SORT_H
