@@ -5,7 +5,7 @@ Version: 0.1.0
 Authors@R: c(
     person("Yuping", "Lu", , "yupinglu@utk.edu", c("aut", "cre"))
     )
-Description: It's usde to compute bicliques
+Description: R package for computing bicliques from a graph
 Depends:
     R (>= 3.1)
 License: GPL-2
