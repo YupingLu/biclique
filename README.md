@@ -6,7 +6,7 @@ Install the package
 
 > R CMD INSTALL biclique
 
-The input file should be tab tab delimited. This package supports edgelist and matrix format.
+The input file should be tab delimited. This package supports edgelist and matrix format.
 Load the package
 > library(biclique)
 
