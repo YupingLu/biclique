@@ -11,9 +11,10 @@ Load the package
 > library(biclique)
 
 Add the number of vertices and edges to the original input graph. If your input file already has these values, you don't have to run this command.
-> bi.format("example1.el")  #edgelist
+> bi.format("example1.el")  #edgelist file
+
 OR
-> bi.format("example2.bmat") #matrix
+> bi.format("example2.bmat") #matrix file
 
 Compute the degree of each vertex. This command is optional.
 > b = bi.degree("example1.el")
