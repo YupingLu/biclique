@@ -15,10 +15,10 @@ OR
 > bi.format("example2.bmat", 1) #matrix file
 
 Compute the degree of each vertex. This command is optional.
-> b = bi.degree("biclique/inst/example1.el")
+> degreelist = bi.degree("example1.el")
 
 Compute the bicliques
-> bi = bi.clique("biclique/inst/example1.el")
+> bicliques = bi.clique("example1.el")
 
 Print the bicliques
-> bi.print(bi)
+> bi.print(bicliques)
