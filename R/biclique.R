@@ -1,23 +1,31 @@
-#' @title biclique
+#' @title Biclique enumeration
 #'
 #' @description
-#' Biclique enumeration
+#' This function will compute the bicliques and output the statistics of these bicliques. 
+#' If you want to get bicliques above a threshold, you can change the values of lleast and rleast.
+#' The input file should be tab delimited with number of vertices and edges at the head of the input file. 
+#' If your input file does not have these values, you can use function bi.format to add these values to it.
+#' This package supports edgelist and binary matrix file format.
+#' Two versions of algorithms are implemented in this function, you can choose either one to get bicliques.
 #'
-#' @param filename input file name
-#' @param lleast 1
-#' @param rleast 1
-#' @param version 1
-#' @param getclique 1
-#' @param filetype 0
+#' @param filename Input file name
+#' @param lleast Least number of left partite <default = 1>
+#' @param rleast Least number of right partite <default = 1>
+#' @param version Algorithm version <default = 1> [1|2]
+#' @param filetype Input file format <default = 0>. 0-edge list, 1-binary matrix.
 #'
 #' @examples
-#' bicliques = biclique("example1.el")
-#'
+#' bicliques = bi.clique("example1.el")
+#' bicliques = bi.clique("example1.el", 3, 2)
+#' bicliques = bi.clique("example4.bmat")
+#' 
 #' @export
-biclique <- function(filename, lleast = 1, rleast = 1, version = 1, getclique = 1, filetype = 0)  #may change this function name to bic.profile
+bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, filetype = 0)
 {
     # parameters for R_biclique
     isdegree = 0
+    # Get bicliques <default = 1>. If you set it to 0. you'll only get the statistics without bicliques.
+    getclique = 1
 
     # Get raw data list
     data.raw = .Call("R_biclique", as.character(filename), as.integer(lleast), as.integer(rleast), as.integer(isdegree),
@@ -58,16 +66,17 @@ biclique <- function(filename, lleast = 1, rleast = 1, version = 1, getclique = 
     invisible(bi)
 }
 
-#' @title bi.degree
+#' @title Get the degree list
 #'
 #' @description
-#' Get the degree list
+#' This function will output the degree of each vertex.
 #'
-#' @param filename input file name
-#' @param filetype 0
+#' @param filename Input file name
+#' @param filetype Input file format <default = 0>. 0-edge list, 1-binary matrix.
 #'
 #' @examples
 #' degreelist = bi.degree("example1.el")
+#' degreelist = bi.degree("example4.bmat", 1)
 #'
 #' @export
 bi.degree <- function(filename, filetype = 0)
@@ -89,16 +98,16 @@ bi.degree <- function(filename, filetype = 0)
     invisible(w)
 }
 
-#' @title bi.print
+#' @title Print the bicliques
 #'
 #' @description
-#' print the bicliques
+#' You can pass results from function bi.clique to this function to visualize the bicliques.
 #'
 #' @param bi bicliques
-#' @param text default is 0. If you want to show labels, change it to 1
+#' @param text default is 0. If you want to show labels, change it to 1.
 #'
 #' @examples
-#' bi.print(biclique)
+#' bi.print(bicliques)
 #'
 #' @export
 bi.print <- function(bi, text = 0)
@@ -116,16 +125,18 @@ bi.print <- function(bi, text = 0)
     if(text == 1) mtext(side=1, at=mp, text=mat, line=1)
 }
 
-#' @title bi.format
+#' @title Add number of vertices and edges to the input file
 #'
 #' @description
-#' add number of vertices and edges to the input file. The original input file will be changed
+#' This funtion will calculate the number of vertices and edges and add them to the head of the input file.
+#' The original input file will be changed.
 #'
-#' @param filename input file name
-#' @param filetype 0, 1 is bmat
+#' @param filename Input file name
+#' @param filetype Input file format <default = 0>. 0-edge list, 1-binary matrix.
 #'
 #' @examples
-#' bi.format(filename)
+#' bi.format("example2.el")
+#' bi.format("example5.bmat", 1)
 #'
 #' @export
 bi.format <- function(filename, filetype = 0)

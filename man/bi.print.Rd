@@ -2,20 +2,20 @@
 % Please edit documentation in R/biclique.R
 \name{bi.print}
 \alias{bi.print}
-\title{bi.print}
+\title{Print the bicliques}
 \usage{
 bi.print(bi, text = 0)
 }
 \arguments{
 \item{bi}{bicliques}
 
-\item{text}{default is 0. If you want to show labels, change it to 1}
+\item{text}{default is 0. If you want to show labels, change it to 1.}
 }
 \description{
-print the bicliques
+You can pass results from function bi.clique to this function to visualize the bicliques.
 }
 \examples{
-bi.print(biclique)
+bi.print(bicliques)
 
 }
 

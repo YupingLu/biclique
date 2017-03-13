@@ -2,20 +2,21 @@
 % Please edit documentation in R/biclique.R
 \name{bi.degree}
 \alias{bi.degree}
-\title{bi.degree}
+\title{Get the degree list}
 \usage{
 bi.degree(filename, filetype = 0)
 }
 \arguments{
-\item{filename}{input file name}
+\item{filename}{Input file name}
 
-\item{filetype}{0}
+\item{filetype}{Input file format <default = 0>. 0-edge list, 1-binary matrix.}
 }
 \description{
-Get the degree list
+This function will output the degree of each vertex.
 }
 \examples{
 degreelist = bi.degree("example1.el")
+degreelist = bi.degree("example4.bmat", 1)
 
 }
 

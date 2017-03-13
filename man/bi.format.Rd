@@ -2,20 +2,22 @@
 % Please edit documentation in R/biclique.R
 \name{bi.format}
 \alias{bi.format}
-\title{bi.format}
+\title{Add number of vertices and edges to the input file}
 \usage{
 bi.format(filename, filetype = 0)
 }
 \arguments{
-\item{filename}{input file name}
+\item{filename}{Input file name}
 
-\item{filetype}{0, 1 is bmat}
+\item{filetype}{Input file format <default = 0>. 0-edge list, 1-binary matrix.}
 }
 \description{
-add number of vertices and edges to the input file. The original input file will be changed
+This funtion will calculate the number of vertices and edges and add them to the head of the input file.
+The original input file will be changed.
 }
 \examples{
-bi.format(filename)
+bi.format("example2.el")
+bi.format("example5.bmat", 1)
 
 }
 

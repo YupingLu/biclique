@@ -8,6 +8,6 @@
 #'
 #' @docType package
 #' @title An R package to compute bicliques
-#' @author Yuping Lu
+#' @author Yuping Lu, Charles Phillips, Michael Langston
 #' @keywords biclique
 NULL
