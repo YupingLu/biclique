@@ -6,6 +6,10 @@
 #ifndef __UTILITY_H
 #define __UTILITY_H
 
+#include <R.h>
+#include <Rdefines.h>
+#include <Rinternals.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 

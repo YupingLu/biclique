@@ -6,6 +6,10 @@
 #ifndef __BIGRAPH_H
 #define __BIGRAPH_H
 
+#include <R.h>
+#include <Rdefines.h>
+#include <Rinternals.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "utility.h"

@@ -103,14 +103,14 @@ void searchtreenode_out(BiGraph *G, vid_t *clique, vid_t *right, \
                 vid_t *left, int nc, int ne, int ce, int nl) 
 {
     int i;
-    for (i = 0; i < nc; i++) printf(" %s", G->_label_v2[clique[i]]);
-    printf("\t|");
-    for (i = 0; i < ne; i++) printf(" %s", G->_label_v2[right[i]]);
-    printf("\t|");
-    for (i = ne; i < ce; i++) printf(" %s", G->_label_v2[right[i]]);
-    printf("\t|");
-    for (i = 0; i < nl; i++) printf(" %s", G->_label_v1[left[i]]);
-    printf("\n");
+    for (i = 0; i < nc; i++) Rprintf(" %s", G->_label_v2[clique[i]]);
+    Rprintf("\t|");
+    for (i = 0; i < ne; i++) Rprintf(" %s", G->_label_v2[right[i]]);
+    Rprintf("\t|");
+    for (i = ne; i < ce; i++) Rprintf(" %s", G->_label_v2[right[i]]);
+    Rprintf("\t|");
+    for (i = 0; i < nl; i++) Rprintf(" %s", G->_label_v1[left[i]]);
+    Rprintf("\n");
 }
 
 void searchtreenode_out2(BiGraph *G, vid_t *clique, vid_t *right, \
@@ -118,15 +118,15 @@ void searchtreenode_out2(BiGraph *G, vid_t *clique, vid_t *right, \
                 int ce, int nl, int old_ne) 
 {
     int i;
-    for (i = 0; i < nc; i++) printf(" %s", G->_label_v2[clique[i]]);
-    printf("\t|");
-    for (i = 0; i < ne; i++) printf(" %s", G->_label_v2[right[i]]);
-    printf(" %s", G->_label_v2[w]); 
-    printf("\t|");
-    for (i = old_ne+1; i < ce; i++) printf(" %s", G->_label_v2[old_right[i]]);
-    printf("\t|");
-    for (i = 0; i < nl; i++) printf(" %s", G->_label_v1[left[i]]);
-    printf("\n");
+    for (i = 0; i < nc; i++) Rprintf(" %s", G->_label_v2[clique[i]]);
+    Rprintf("\t|");
+    for (i = 0; i < ne; i++) Rprintf(" %s", G->_label_v2[right[i]]);
+    Rprintf(" %s", G->_label_v2[w]); 
+    Rprintf("\t|");
+    for (i = old_ne+1; i < ce; i++) Rprintf(" %s", G->_label_v2[old_right[i]]);
+    Rprintf("\t|");
+    for (i = 0; i < nl; i++) Rprintf(" %s", G->_label_v1[left[i]]);
+    Rprintf("\n");
 }
 
 
@@ -366,7 +366,10 @@ void biclique_enumerate(int **g_right, int **g_left, int *profile, BiGraph *G, \
     
     /* Initialization */
     nclique = (num_t *) calloc(n1*n2, sizeof(num_t));
-    if (!nclique) { perror("malloc nclique\n"); exit(-1); }
+    if (!nclique) { 
+        error("malloc nclique");
+        //perror("malloc nclique\n"); exit(-1); 
+    }
     memset(clique, -1, n2*sizeof(vid_t));  // initially Clique is empty
     for (u = 0; u < n1; u++) left[u] = u;  // every left vertex is candidate 
     for (v = 0; v < n2; v++) right[v] = v; // every right vertex is candidate

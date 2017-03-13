@@ -16,13 +16,19 @@ Set *make_set(unsigned int set_size)
     int num_ints;
 
     S = (Set *) malloc(sizeof(Set));
-    if (S == NULL) { perror("malloc"); exit(-1); }
+    if (S == NULL) { 
+        error("malloc");
+        //perror("malloc"); exit(-1); 
+    }
     S->_set_size = set_size;
     S->_num_elements = 0;
     num_ints = set_size / (sizeof(unsigned int) * CHAR_BITS);
     if ((set_size % (sizeof(unsigned int) * CHAR_BITS)) != 0) num_ints++;
     S->_set = (unsigned int *) malloc(num_ints * sizeof(unsigned int));
-    if (S->_set == NULL) { perror("malloc"); exit(-1); }
+    if (S->_set == NULL) { 
+        error("malloc");
+        //perror("malloc"); exit(-1); 
+    }
     memset(S->_set, 0, num_ints * sizeof(unsigned int));
 
     return S;
@@ -97,10 +103,16 @@ Mapping *make_mapping(unsigned int size)
     Mapping *M;
     int i;
     M = (Mapping *) malloc(sizeof(Mapping));
-    if (M == NULL) { perror("malloc"); exit(-1); }
+    if (M == NULL) { 
+        error("malloc");
+        //perror("malloc"); exit(-1); 
+    }
     M->_size = size;
     M->_mapping = (short *) malloc(size * sizeof(short));
-    if (M == NULL) { perror("malloc"); exit(-1); }
+    if (M == NULL) { 
+        error("malloc");
+        //perror("malloc"); exit(-1); 
+    }
     for (i = 0; i < size; i++) 
         set_mapping(M, i, -1);
     return M;
@@ -181,17 +193,29 @@ Memory *memory_make(size_t num_bytes)
 {
     Memory *M;
     M = (Memory *) malloc(sizeof(Memory));
-    if (M == NULL) { perror("malloc"); exit(1); }
+    if (M == NULL) { 
+        error("malloc");
+        //perror("malloc"); exit(1); 
+    }
     M->_num_bytes = num_bytes;
     M->_num_chunk = 1;
     M->_cur_chunk = 0;
     M->_head = (unsigned char **) calloc(MAX_NUM_CHUNK, sizeof(unsigned char*));
-    if (M->_head == NULL) { perror("calloc"); exit(1); }
+    if (M->_head == NULL) { 
+        error("calloc");
+        //perror("calloc"); exit(1); 
+    }
     M->_head[0] = (unsigned char *) malloc(num_bytes);
-    if (M->_head[0] == NULL) { perror("malloc"); exit(1); }
+    if (M->_head[0] == NULL) { 
+        error("malloc");
+        //perror("malloc"); exit(1); 
+    }
     M->_sbrk = M->_head[0];
     M->_tail = (unsigned char **) calloc(MAX_NUM_CHUNK, sizeof(unsigned char*));
-    if (M->_tail == NULL) { perror("calloc"); exit(1); }
+    if (M->_tail == NULL) { 
+        error("calloc");
+        //perror("calloc"); exit(1); 
+    }
     M->_tail[0] = M->_head[0] + num_bytes;
     return M;
 }
@@ -215,7 +239,10 @@ int memory_malloc_chunk(Memory *M)
     M->_num_chunk++;
     M->_cur_chunk++;
     M->_head[M->_cur_chunk] = (unsigned char *) malloc(M->_num_bytes);
-    if (M->_head[M->_cur_chunk] == NULL) { perror("malloc"); exit(1); }
+    if (M->_head[M->_cur_chunk] == NULL) { 
+        error("malloc");
+        //perror("malloc"); exit(1); 
+    }
     M->_tail[M->_cur_chunk] = M->_head[M->_cur_chunk] + M->_num_bytes;
     M->_sbrk = M->_head[M->_cur_chunk];
     return 0;

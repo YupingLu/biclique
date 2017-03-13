@@ -12,5 +12,8 @@ URL: https://github.com/YupingLu/biclique
 BugReports: https://github.com/YupingLu/biclique/issues
 Depends:
     R (>= 3.1)
+Imports:
+    graphics,
+    utils
 License: GPL (>= 2)
 RoxygenNote: 5.0.1

@@ -15,7 +15,9 @@ bi.print(bi, text = 0)
 You can pass results from function bi.clique to this function to visualize the bicliques.
 }
 \examples{
+\dontrun{
 bi.print(bicliques)
+}
 
 }
 

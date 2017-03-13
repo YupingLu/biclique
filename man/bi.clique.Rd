@@ -18,17 +18,19 @@ bi.clique(filename, lleast = 1, rleast = 1, version = 1, filetype = 0)
 \item{filetype}{Input file format <default = 0>. 0-edge list, 1-binary matrix.}
 }
 \description{
-This function will compute the bicliques and output the statistics of these bicliques. 
+This function will compute the bicliques and output the statistics of these bicliques.
 If you want to get bicliques above a threshold, you can change the values of lleast and rleast.
-The input file should be tab delimited with number of vertices and edges at the head of the input file. 
+The input file should be tab delimited with number of vertices and edges at the head of the input file.
 If your input file does not have these values, you can use function bi.format to add these values to it.
 This package supports edgelist and binary matrix file format.
 Two versions of algorithms are implemented in this function, you can choose either one to get bicliques.
 }
 \examples{
+\dontrun{
 bicliques = bi.clique("example1.el")
 bicliques = bi.clique("example1.el", 3, 2)
 bicliques = bi.clique("example4.bmat")
+}
 
 }
 

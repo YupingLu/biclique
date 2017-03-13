@@ -15,8 +15,10 @@ bi.degree(filename, filetype = 0)
 This function will output the degree of each vertex.
 }
 \examples{
+\dontrun{
 degreelist = bi.degree("example1.el")
 degreelist = bi.degree("example4.bmat", 1)
+}
 
 }
 

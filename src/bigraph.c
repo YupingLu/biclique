@@ -20,7 +20,10 @@ BiGraph *bigraph_make(unsigned int num_v1, unsigned int num_v2)
     int num_ints_v2 = bit_num_ints(num_v1);
     
     G = (BiGraph *) malloc(sizeof(BiGraph));
-    if (G == NULL) { perror("malloc"); exit(-1); }
+    if (G == NULL) { 
+        error("malloc");
+        //perror("malloc"); exit(-1); 
+    }
     G->_num_v1 = num_v1;
     G->_num_v2 = num_v2;
     G->_num_edges = 0;
@@ -30,27 +33,43 @@ BiGraph *bigraph_make(unsigned int num_v1, unsigned int num_v2)
     G->_label_v1 = (char **) malloc(num_v1 * sizeof(char *));
     G->_label_v2 = (char **) malloc(num_v2 * sizeof(char *));
     if (G->_label_v1 == NULL || G->_label_v2 == NULL) {
-    perror("bigraph_make: malloc label");
-    exit(-1);
+        error("bigraph_make: malloc label");
+        //perror("bigraph_make: malloc label");
+        //exit(-1);
     }
 
     G->_neighbor_v1 = (unsigned int **) malloc(num_v1 * sizeof(unsigned int *));
-    if (G->_neighbor_v1 == NULL) { perror("malloc"); exit(-1); }
+    if (G->_neighbor_v1 == NULL) { 
+        error("malloc");
+        //perror("malloc"); exit(-1); 
+    }
     G->_neighbor_v1[0] = (unsigned int *) malloc(G->_num_bytes_v1 * num_v1);
-    if (G->_neighbor_v1[0] == NULL) { perror("malloc"); exit(-1); }
+    if (G->_neighbor_v1[0] == NULL) { 
+        error("malloc");
+        //perror("malloc"); exit(-1); 
+    }
     for (i = 0; i < num_v1; i++)
         G->_neighbor_v1[i] = G->_neighbor_v1[0] + i * num_ints_v1;
 
     G->_neighbor_v2 = (unsigned int **) malloc(num_v2 * sizeof(unsigned int *));
-    if (G->_neighbor_v2 == NULL) { perror("malloc"); exit(-1); }
+    if (G->_neighbor_v2 == NULL) { 
+        error("malloc");
+        //perror("malloc"); exit(-1); 
+    }
     G->_neighbor_v2[0] = (unsigned int *) malloc(G->_num_bytes_v2 * num_v2);
-    if (G->_neighbor_v2[0] == NULL) { perror("malloc"); exit(-1); }
+    if (G->_neighbor_v2[0] == NULL) { 
+        error("malloc");
+        //perror("malloc"); exit(-1); 
+    }
     for (i = 0; i < num_v2; i++)
         G->_neighbor_v2[i] = G->_neighbor_v2[0] + i * num_ints_v2;
     
     G->_degree_v1 = (unsigned short *) malloc(num_v1 * sizeof(unsigned short));
     G->_degree_v2 = (unsigned short *) malloc(num_v2 * sizeof(unsigned short));
-    if (!G->_degree_v1 | !G->_degree_v2) { perror("malloc degree"); exit(-1); }
+    if (!G->_degree_v1 | !G->_degree_v2) { 
+        error("malloc degree");
+        //perror("malloc degree"); exit(-1); 
+    }
     
     memset(G->_neighbor_v1[0], 0, G->_num_bytes_v1 * num_v1);
     memset(G->_neighbor_v2[0], 0, G->_num_bytes_v2 * num_v2);
@@ -97,8 +116,9 @@ BiGraph * bigraph_edgelist_in(FILE *fp)
     ENTRY *found_item;
     
     if (fscanf(fp, "%d %d %d", &n1, &n2, &e) != 3) {
-        fprintf(stderr, "Bad file format: n1 n2 e incorrect\n");
-    exit(1);
+        error("Bad file format: n1 n2 e incorrect");
+        //fprintf(stderr, "Bad file format: n1 n2 e incorrect\n");
+        //exit(1);
     }
     
     G = bigraph_make(n1, n2);
@@ -110,8 +130,9 @@ BiGraph * bigraph_edgelist_in(FILE *fp)
     
     while ((r = fscanf(fp, "%s\t%s", word1, word2)) != EOF) {
     if (r != 2) {
-        fprintf(stderr, "Bad file format: label1 label2 incorrect\n");
-        exit(1);
+        error("Bad file format: label1 label2 incorrect");
+        //fprintf(stderr, "Bad file format: label1 label2 incorrect\n");
+        //exit(1);
     }
 
 /*
@@ -154,12 +175,14 @@ BiGraph * bigraph_edgelist_in(FILE *fp)
     }
 
     if (k1 > n1) {
-        fprintf(stderr, "Bad file format: too many left vertex labels\n");
-        exit(1);
+        error("Bad file format: too many left vertex labels");
+        //fprintf(stderr, "Bad file format: too many left vertex labels\n");
+        //exit(1);
     }
     if (k2 > n2) {
-        fprintf(stderr, "Bad file format: too many right vertex labels\n");
-        exit(1);
+        error("Bad file format: too many right vertex labels");
+        //fprintf(stderr, "Bad file format: too many right vertex labels\n");
+        //exit(1);
     }
     
         bigraph_add_edge(G, u, v);
@@ -167,11 +190,14 @@ BiGraph * bigraph_edgelist_in(FILE *fp)
     }
     
     if (edges != e) 
-    fprintf(stderr, "edgelist_in: number of edges incorrect\n");
+        REprintf("edgelist_in: number of edges incorrect\n");
+        //fprintf(stderr, "edgelist_in: number of edges incorrect\n");
     if (k1 != n1) 
-    fprintf(stderr, "edgelist_in: number of left vertices incorrect %d\n", k1);
+        REprintf("edgelist_in: number of left vertices incorrect%d\n", k1);
+        //fprintf(stderr, "edgelist_in: number of left vertices incorrect %d\n", k1);
     if (k2 != n2) 
-    fprintf(stderr, "edgelist_in: number of right vertices incorrect %d\n", k2);
+        REprintf("edgelist_in: number of right vertices incorrect %d\n", k2);
+        //fprintf(stderr, "edgelist_in: number of right vertices incorrect %d\n", k2);
 
     (void) hdestroy();
     free(id1);
@@ -222,9 +248,11 @@ BiGraph * bigraph_binarymatrix_in(FILE *fp)
     }
 
     if (k1 != n1) 
-    fprintf(stderr, "binarymatrix_in: # left vertices incorret %d\n", k1);
+        REprintf("binarymatrix_in: # left vertices incorret %d\n", k1);
+        //fprintf(stderr, "binarymatrix_in: # left vertices incorret %d\n", k1);
     if (k2 != n2) 
-    fprintf(stderr, "binarymatrix_in: # right vertices incorret %d\n", k2);
+        REprintf("binarymatrix_in: # right vertices incorret %d\n", k2);
+        //fprintf(stderr, "binarymatrix_in: # right vertices incorret %d\n", k2);
 
     return G;
 }

@@ -1,9 +1,9 @@
 #' @title Biclique enumeration
 #'
 #' @description
-#' This function will compute the bicliques and output the statistics of these bicliques. 
+#' This function will compute the bicliques and output the statistics of these bicliques.
 #' If you want to get bicliques above a threshold, you can change the values of lleast and rleast.
-#' The input file should be tab delimited with number of vertices and edges at the head of the input file. 
+#' The input file should be tab delimited with number of vertices and edges at the head of the input file.
 #' If your input file does not have these values, you can use function bi.format to add these values to it.
 #' This package supports edgelist and binary matrix file format.
 #' Two versions of algorithms are implemented in this function, you can choose either one to get bicliques.
@@ -15,10 +15,12 @@
 #' @param filetype Input file format <default = 0>. 0-edge list, 1-binary matrix.
 #'
 #' @examples
+#' \dontrun{
 #' bicliques = bi.clique("example1.el")
 #' bicliques = bi.clique("example1.el", 3, 2)
 #' bicliques = bi.clique("example4.bmat")
-#' 
+#' }
+#'
 #' @export
 bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, filetype = 0)
 {
@@ -75,8 +77,10 @@ bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, filetype = 
 #' @param filetype Input file format <default = 0>. 0-edge list, 1-binary matrix.
 #'
 #' @examples
+#' \dontrun{
 #' degreelist = bi.degree("example1.el")
 #' degreelist = bi.degree("example4.bmat", 1)
+#' }
 #'
 #' @export
 bi.degree <- function(filename, filetype = 0)
@@ -107,8 +111,11 @@ bi.degree <- function(filename, filetype = 0)
 #' @param text default is 0. If you want to show labels, change it to 1.
 #'
 #' @examples
+#' \dontrun{
 #' bi.print(bicliques)
+#' }
 #'
+#' @importFrom graphics barplot mtext
 #' @export
 bi.print <- function(bi, text = 0)
 {
@@ -135,9 +142,12 @@ bi.print <- function(bi, text = 0)
 #' @param filetype Input file format <default = 0>. 0-edge list, 1-binary matrix.
 #'
 #' @examples
+#' \dontrun{
 #' bi.format("example2.el")
 #' bi.format("example5.bmat", 1)
+#' }
 #'
+#' @importFrom utils read.table write.table
 #' @export
 bi.format <- function(filename, filetype = 0)
 {

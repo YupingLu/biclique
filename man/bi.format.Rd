@@ -16,8 +16,10 @@ This funtion will calculate the number of vertices and edges and add them to the
 The original input file will be changed.
 }
 \examples{
+\dontrun{
 bi.format("example2.el")
 bi.format("example5.bmat", 1)
+}
 
 }
 
