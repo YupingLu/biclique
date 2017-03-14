@@ -4,19 +4,17 @@
 \alias{bi.print}
 \title{Print the bicliques}
 \usage{
-bi.print(bi, text = 0)
+bi.print(envir = .GlobalEnv$.bienv)
 }
 \arguments{
-\item{bi}{bicliques}
-
-\item{text}{default is 0. If you want to show labels, change it to 1.}
+\item{envir}{biclique environment}
 }
 \description{
 You can pass results from function bi.clique to this function to visualize the bicliques.
 }
 \examples{
 \dontrun{
-bi.print(bicliques)
+bi.print()
 }
 
 }

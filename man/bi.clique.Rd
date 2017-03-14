@@ -4,7 +4,8 @@
 \alias{bi.clique}
 \title{Biclique enumeration}
 \usage{
-bi.clique(filename, lleast = 1, rleast = 1, version = 1, filetype = 0)
+bi.clique(filename, lleast = 1, rleast = 1, version = 1, filetype = 0,
+  envir = .GlobalEnv$.bienv)
 }
 \arguments{
 \item{filename}{Input file name}
@@ -16,6 +17,8 @@ bi.clique(filename, lleast = 1, rleast = 1, version = 1, filetype = 0)
 \item{version}{Algorithm version <default = 1> [1|2]}
 
 \item{filetype}{Input file format <default = 0>. 0-edge list, 1-binary matrix.}
+
+\item{envir}{biclique environment}
 }
 \description{
 This function will compute the bicliques and output the statistics of these bicliques.

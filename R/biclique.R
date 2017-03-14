@@ -13,6 +13,7 @@
 #' @param rleast Least number of right partite <default = 1>
 #' @param version Algorithm version <default = 1> [1|2]
 #' @param filetype Input file format <default = 0>. 0-edge list, 1-binary matrix.
+#' @param envir biclique environment
 #'
 #' @examples
 #' \dontrun{
@@ -22,8 +23,11 @@
 #' }
 #'
 #' @export
-bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, filetype = 0)
+bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, filetype = 0, envir = .GlobalEnv$.bienv)
 {
+    # reset global variables
+    init_state()
+
     # parameters for R_biclique
     isdegree = 0
     # Get bicliques <default = 1>. If you set it to 0. you'll only get the statistics without bicliques.
@@ -42,7 +46,12 @@ bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, filetype = 
     profile = paste("biclique\tNumber\n")
 
    	for (i in seq(1, nelems-9, 3)){
+
         profile = paste(profile, "K", profile.raw[i+2], ",", profile.raw[i+1], "\t\t", profile.raw[i+3], "\n", sep="")
+        envir$nofbi[envir$cnt] <- profile.raw[i+3]
+        envir$noflr[envir$cnt*2-1] <- profile.raw[i+2]
+        envir$noflr[envir$cnt*2] <- profile.raw[i+1]
+        envir$cnt <- envir$cnt + 1
    	}
 
    	profile = paste(profile, "\n", sep="")
@@ -107,29 +116,32 @@ bi.degree <- function(filename, filetype = 0)
 #' @description
 #' You can pass results from function bi.clique to this function to visualize the bicliques.
 #'
-#' @param bi bicliques
-#' @param text default is 0. If you want to show labels, change it to 1.
+#' @param envir biclique environment
 #'
 #' @examples
 #' \dontrun{
-#' bi.print(bicliques)
+#' bi.print()
 #' }
 #'
-#' @importFrom graphics barplot mtext
+#' @importFrom graphics barplot lines points text
 #' @export
-bi.print <- function(bi, text = 0)
+bi.print <- function(envir = .GlobalEnv$.bienv)
 {
-    res = c()
-    cnt = 1
-    for(b in bi){
-        res[cnt] = length(b[[1]])
-        cnt = cnt+1
-        res[cnt] = length(b[[2]])
-        cnt = cnt+1
-    }
-    mat = matrix(res, nrow=2, byrow=TRUE)
-    mp = barplot(mat, main = "Bicliques", beside=T)
-    if(text == 1) mtext(side=1, at=mp, text=mat, line=1)
+     # check if .GlobalEnv$.bienv$nofbi is null
+    if(is.null(envir$nofbi))
+        stop("No bicliques. Make sure you run bi.clique first.")
+
+    ylim <- c(0, 1.1*max(envir$noflr))
+    mat <- matrix(envir$noflr, nrow=2)
+    colnames(mat) <- envir$nofbi
+    rownames(mat) <- c("Left Partite","Right Partite")
+    mat <- as.table(mat)
+    xx <- barplot(mat, legend=T, beside=T, main='Bicliques', xlab="Number of each biclique", ylab="Number of vertices", ylim=ylim)
+    text(x=xx, y=mat, label=mat, pos=3, cex=0.8, col="red")
+    x1 = (xx[1,] + xx[2,])/2
+    y1 = (max(envir$noflr)*0.6) / max(envir$nofbi)
+    lines(x1, envir$nofbi*y1, col="orange")
+    points(x1, envir$nofbi*y1, col="orange")
 }
 
 #' @title Add number of vertices and edges to the input file
