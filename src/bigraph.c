@@ -292,4 +292,3 @@ void bigraph_degreelist_out(FILE *fp, BiGraph *G)
 }
  
 
-
