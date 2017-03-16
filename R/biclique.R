@@ -70,7 +70,8 @@ bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, filetype = 
     for(i in 1:profile.raw[nelems-4]){
         temp1 = unlist(data.raw[[1]][[i]])
         temp2 = unlist(data.raw[[2]][[i]])
-        bi[[i]] = list(temp2, temp1)
+        idx = paste("biclique", i, sep="")
+        bi[[idx]] = list(left=temp2, right=temp1)
     }
 
     # returned are the bicliques
@@ -89,6 +90,8 @@ bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, filetype = 
 #' \dontrun{
 #' degreelist = bi.degree("example1.el")
 #' degreelist = bi.degree("example4.bmat", 1)
+#' #get the vertex degree
+#' degreelist$u1
 #' }
 #'
 #' @export
@@ -107,8 +110,11 @@ bi.degree <- function(filename, filetype = 0)
     degree = unlist(degreelist)
     w = data.frame(degree)
 
+    # print edgelist
+    on.exit(print(w))
+
     # returned are the biclique degree data.frame
-    invisible(w)
+    invisible(degreelist)
 }
 
 #' @title Print the bicliques
