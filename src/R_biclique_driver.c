@@ -52,8 +52,10 @@ void maximal_biclique(BiGraph *G, int *profile, int **g_right, int **g_left)
     * 1st element of nnr/nnl is the totoal number of bicliques
     * other elements of nnr/nnl are the totoal number of nodes in each biclique
     */
-    nnr = (int *) calloc ((n2 * n1 + 1), sizeof (int));
-    nnl = (int *) calloc ((n2 * n1 + 1), sizeof (int));
+    //nnr = (int *) calloc ((n2 * n1 + 1), sizeof (int));
+    //nnl = (int *) calloc ((n2 * n1 + 1), sizeof (int));
+    nnr = (int *) Calloc ((n2 * n1 + 1), int);
+    nnl = (int *) Calloc ((n2 * n1 + 1), int);
     
     vid_t cand[n2];
     int i;
@@ -117,7 +119,8 @@ SEXP R_biclique(SEXP R_file, SEXP R_lleast, SEXP R_rleast, SEXP R_degree, SEXP R
     }
     else {
         SEXP profile_data;
-        int *profile = (int *) malloc ((3*(n1 * n2) + 9) * sizeof (int));
+        //int *profile = (int *) malloc ((3*(n1 * n2) + 9) * sizeof (int));
+        int *profile = (int *) Calloc ((3*(n1 * n2) + 9), int);
 
         SEXP R_biclique_right, R_biclique_left;
         R_data = PROTECT(allocVector(VECSXP, 3));
@@ -125,8 +128,10 @@ SEXP R_biclique(SEXP R_file, SEXP R_lleast, SEXP R_rleast, SEXP R_degree, SEXP R
         /*
         * Allocate memory for g_right and g_left. Biclique nodes in them.
         */
-        int **g_right = (int **) malloc (n2 * n1 * sizeof (int*));
-        int **g_left = (int **) malloc (n2 * n1 * sizeof (int*));
+        //int **g_right = (int **) malloc (n2 * n1 * sizeof (int*));
+        //int **g_left = (int **) malloc (n2 * n1 * sizeof (int*));
+        int **g_right = (int **) Calloc (n2 * n1, int*);
+        int **g_left = (int **) Calloc (n2 * n1, int*);
 
         maximal_biclique(G, profile, g_right, g_left);
 
