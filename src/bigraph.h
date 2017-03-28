@@ -32,7 +32,7 @@ typedef struct bipartite_graph_t {
     unsigned short *_degree_v2;   /* number of edges each vertex have (<65536) */
 } BiGraph;
 
-
+#define Strdup(X) strcpy(R_alloc(strlen(X)+1, sizeof(char)), X) 
 
 /* Macros for BiGraph */
 
@@ -83,7 +83,7 @@ typedef struct bipartite_graph_t {
 BiGraph *bigraph_make(unsigned int num_v1, unsigned int num_v2);
 
 /* Free the memory of a graph */
-void bigraph_free(BiGraph *G);
+//void bigraph_free(BiGraph *G);
 
 /* Read in a graph from an unweighted edge-list format file */
 BiGraph *bigraph_edgelist_in(FILE *fp);

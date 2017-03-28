@@ -20,10 +20,10 @@ BiGraph *bigraph_make(unsigned int num_v1, unsigned int num_v2)
     int num_ints_v1 = bit_num_ints(num_v2);
     int num_ints_v2 = bit_num_ints(num_v1);
     
-    G = (BiGraph *) malloc(sizeof(BiGraph));
+    //G = (BiGraph *) Calloc(1, BiGraph);
+    G = (BiGraph *) R_alloc(1, sizeof(BiGraph));
     if (G == NULL) { 
         error("malloc");
-        //perror("malloc"); exit(-1); 
     }
     G->_num_v1 = num_v1;
     G->_num_v2 = num_v2;
@@ -31,45 +31,47 @@ BiGraph *bigraph_make(unsigned int num_v1, unsigned int num_v2)
     G->_num_bytes_v1 = num_ints_v1 * sizeof(int);
     G->_num_bytes_v2 = num_ints_v2 * sizeof(int);
 
-    G->_label_v1 = (char **) malloc(num_v1 * sizeof(char *));
-    G->_label_v2 = (char **) malloc(num_v2 * sizeof(char *));
+    //G->_label_v1 = (char **) Calloc(num_v1, char *);
+    //G->_label_v2 = (char **) Calloc(num_v2, char *);
+    G->_label_v1 = (char **) R_alloc(num_v1, sizeof(char *));
+    G->_label_v2 = (char **) R_alloc(num_v2, sizeof(char *));
+
     if (G->_label_v1 == NULL || G->_label_v2 == NULL) {
         error("bigraph_make: malloc label");
-        //perror("bigraph_make: malloc label");
-        //exit(-1);
     }
 
-    G->_neighbor_v1 = (unsigned int **) malloc(num_v1 * sizeof(unsigned int *));
+    //G->_neighbor_v1 = (unsigned int **) Calloc(num_v1, unsigned int *);
+    G->_neighbor_v1 = (unsigned int **) R_alloc(num_v1, sizeof(unsigned int *));
     if (G->_neighbor_v1 == NULL) { 
         error("malloc");
-        //perror("malloc"); exit(-1); 
     }
-    G->_neighbor_v1[0] = (unsigned int *) malloc(G->_num_bytes_v1 * num_v1);
+    //G->_neighbor_v1[0] = (unsigned int *) Calloc(G->_num_bytes_v1 * num_v1, unsigned int);
+    G->_neighbor_v1[0] = (unsigned int *) R_alloc(num_ints_v1 * num_v1, sizeof(int));
     if (G->_neighbor_v1[0] == NULL) { 
         error("malloc");
-        //perror("malloc"); exit(-1); 
     }
     for (i = 0; i < num_v1; i++)
         G->_neighbor_v1[i] = G->_neighbor_v1[0] + i * num_ints_v1;
 
-    G->_neighbor_v2 = (unsigned int **) malloc(num_v2 * sizeof(unsigned int *));
+    //G->_neighbor_v2 = (unsigned int **) Calloc(num_v2, unsigned int *);
+    G->_neighbor_v2 = (unsigned int **) R_alloc(num_v2, sizeof(unsigned int *));
     if (G->_neighbor_v2 == NULL) { 
         error("malloc");
-        //perror("malloc"); exit(-1); 
     }
-    G->_neighbor_v2[0] = (unsigned int *) malloc(G->_num_bytes_v2 * num_v2);
+    //G->_neighbor_v2[0] = (unsigned int *) Calloc(G->_num_bytes_v2 * num_v2, unsigned int);
+    G->_neighbor_v2[0] = (unsigned int *) R_alloc(num_ints_v2 * num_v2, sizeof(int));
     if (G->_neighbor_v2[0] == NULL) { 
-        error("malloc");
-        //perror("malloc"); exit(-1); 
+        error("malloc"); 
     }
     for (i = 0; i < num_v2; i++)
         G->_neighbor_v2[i] = G->_neighbor_v2[0] + i * num_ints_v2;
     
-    G->_degree_v1 = (unsigned short *) malloc(num_v1 * sizeof(unsigned short));
-    G->_degree_v2 = (unsigned short *) malloc(num_v2 * sizeof(unsigned short));
+    //G->_degree_v1 = (unsigned short *) Calloc(num_v1, unsigned short);
+    //G->_degree_v2 = (unsigned short *) Calloc(num_v2, unsigned short);
+    G->_degree_v1 = (unsigned short *) R_alloc(num_v1, sizeof(unsigned short));
+    G->_degree_v2 = (unsigned short *) R_alloc(num_v2, sizeof(unsigned short));
     if (!G->_degree_v1 | !G->_degree_v2) { 
         error("malloc degree");
-        //perror("malloc degree"); exit(-1); 
     }
     
     memset(G->_neighbor_v1[0], 0, G->_num_bytes_v1 * num_v1);
@@ -82,25 +84,25 @@ BiGraph *bigraph_make(unsigned int num_v1, unsigned int num_v2)
 
 
 /* Free the memory of a graph */
-void bigraph_free(BiGraph *G)
+/*void bigraph_free(BiGraph *G)
 {
     int i;
     if (G != NULL) {
         if (G->_neighbor_v1) {
-            if (G->_neighbor_v1[0]) free(G->_neighbor_v1[0]);
-            free(G->_neighbor_v1);
+            if (G->_neighbor_v1[0]) Free(G->_neighbor_v1[0]);
+            Free(G->_neighbor_v1);
         }
         if (G->_neighbor_v2) {
-            if (G->_neighbor_v2[0]) free(G->_neighbor_v2[0]);
-            free(G->_neighbor_v2);
+            if (G->_neighbor_v2[0]) Free(G->_neighbor_v2[0]);
+            Free(G->_neighbor_v2);
         }
-    for (i = 0; i < G->_num_v1; i++) free(G->_label_v1[i]);
-    for (i = 0; i < G->_num_v2; i++) free(G->_label_v2[i]);
-        if (G->_degree_v1) free(G->_degree_v1);
-        if (G->_degree_v2) free(G->_degree_v2);
-        free(G);
+        for (i = 0; i < G->_num_v1; i++) Free(G->_label_v1[i]);
+        for (i = 0; i < G->_num_v2; i++) Free(G->_label_v2[i]);
+        if (G->_degree_v1) Free(G->_degree_v1);
+        if (G->_degree_v2) Free(G->_degree_v2);
+        Free(G);
     }
-}
+}*/
 
 /** I/O functions for Graph **/
 
@@ -118,91 +120,78 @@ BiGraph * bigraph_edgelist_in(FILE *fp)
     
     if (fscanf(fp, "%d %d %d", &n1, &n2, &e) != 3) {
         error("Bad file format: n1 n2 e incorrect");
-        //fprintf(stderr, "Bad file format: n1 n2 e incorrect\n");
-        //exit(1);
     }
     
     G = bigraph_make(n1, n2);
     
     /* create a hash table */
     (void) hcreate(n1+n2);
-    id1 = (int *) malloc(n1 * sizeof(int));
-    id2 = (int *) malloc(n2 * sizeof(int));
+    id1 = (int *) R_alloc(n1, sizeof(int));
+    id2 = (int *) R_alloc(n2, sizeof(int));
     
     while ((r = fscanf(fp, "%s\t%s", word1, word2)) != EOF) {
-    if (r != 2) {
-        error("Bad file format: label1 label2 incorrect");
-        //fprintf(stderr, "Bad file format: label1 label2 incorrect\n");
-        //exit(1);
-    }
-
-/*
-    u = -1; 
-    v = -1;
-        for (i = 0; i < k1; i++)
-        if (strcmp(word1, G->_label_v1[i]) == 0) { u = i; break; }
-        for (i = 0; i < k2; i++)
-        if (strcmp(word2, G->_label_v2[i]) == 0) { v = i; break; }
-    if (u == -1) { u = k1; G->_label_v1[k1++] = strdup(word1); }
-    if (v == -1) { v = k2; G->_label_v2[k2++] = strdup(word2); }
-*/
+        if (r != 2) {
+            (void) hdestroy();
+            error("Bad file format: label1 label2 incorrect");
+        }
 
         item.key = word1;
-    if ((found_item = hsearch(item, FIND)) != NULL) {
-        id = (int *) (found_item->data);
-        u = *id;
-    }
-    else {
-        u = k1; 
-        G->_label_v1[k1++] = strdup(word1);
-        item.key = G->_label_v1[u];
-        id1[u] = u;
-        item.data = (void *) (id1+u);
-        (void) hsearch(item, ENTER);
-    }
+        if ((found_item = hsearch(item, FIND)) != NULL) {
+            id = (int *) (found_item->data);
+            u = *id;
+        }
+        else {
+            u = k1; 
+            G->_label_v1[k1++] = Strdup(word1);
+            item.key = G->_label_v1[u];
+            id1[u] = u;
+            item.data = (void *) (id1+u);
+            (void) hsearch(item, ENTER);
+        }
 
-    item.key = word2;
-    if ((found_item = hsearch(item, FIND)) != NULL) {
-        id = (int *) (found_item->data);
-        v = *id;
-    }
-    else {
-        v = k2; 
-        G->_label_v2[k2++] = strdup(word2);
-        item.key = G->_label_v2[v];
-        id2[v] = v;
-        item.data = (void *) (id2+v);
-        (void) hsearch(item, ENTER);
-    }
+        item.key = word2;
+        if ((found_item = hsearch(item, FIND)) != NULL) {
+            id = (int *) (found_item->data);
+            v = *id;
+        }
+        else {
+            v = k2; 
+            G->_label_v2[k2++] = Strdup(word2);
+            item.key = G->_label_v2[v];
+            id2[v] = v;
+            item.data = (void *) (id2+v);
+            (void) hsearch(item, ENTER);
+        }
 
-    if (k1 > n1) {
-        error("Bad file format: too many left vertex labels");
-        //fprintf(stderr, "Bad file format: too many left vertex labels\n");
-        //exit(1);
-    }
-    if (k2 > n2) {
-        error("Bad file format: too many right vertex labels");
-        //fprintf(stderr, "Bad file format: too many right vertex labels\n");
-        //exit(1);
-    }
-    
+        if (k1 > n1) {
+            (void) hdestroy();
+            error("Bad file format: too many left vertex labels");
+        }
+        if (k2 > n2) {
+            (void) hdestroy();
+            error("Bad file format: too many right vertex labels");
+        }
+        
         bigraph_add_edge(G, u, v);
-    edges++;
+        edges++;
     }
     
-    if (edges != e) 
-        REprintf("edgelist_in: number of edges incorrect\n");
-        //fprintf(stderr, "edgelist_in: number of edges incorrect\n");
-    if (k1 != n1) 
-        REprintf("edgelist_in: number of left vertices incorrect%d\n", k1);
-        //fprintf(stderr, "edgelist_in: number of left vertices incorrect %d\n", k1);
-    if (k2 != n2) 
-        REprintf("edgelist_in: number of right vertices incorrect %d\n", k2);
-        //fprintf(stderr, "edgelist_in: number of right vertices incorrect %d\n", k2);
+    if (edges != e) {
+        (void) hdestroy();
+        error("edgelist_in: number of edges incorrect\n");
+    }
+    if (k1 != n1) {
+        (void) hdestroy();
+        error("edgelist_in: number of left vertices incorrect\n");
+    }
+    if (k2 != n2) {
+        (void) hdestroy();
+        error("edgelist_in: number of right vertices incorrect\n");
+    }
 
     (void) hdestroy();
-    free(id1);
-    free(id2);
+    //Free(id1);
+    //Free(id2);
     
     return G;
 }
@@ -230,30 +219,30 @@ BiGraph * bigraph_binarymatrix_in(FILE *fp)
     //fgets(line, LINE_LENGTH, fp);
     a = strtok(line, delims);
     k2 = 0;
-    G->_label_v2[k2++] = strdup(a);
+    G->_label_v2[k2++] = Strdup(a);
     while ((a = strtok(NULL, delims)) != NULL) {
-        G->_label_v2[k2++] = strdup(a);
+        G->_label_v2[k2++] = Strdup(a);
     }
 
     k1 = 0;
     while (fgets(line, LINE_LENGTH, fp) != NULL) {
         a = strtok(line, delims);
-        G->_label_v1[k1] = strdup(a);
-    i = 0;
+        G->_label_v1[k1] = Strdup(a);
+        i = 0;
         while ((a = strtok(NULL, delims)) != NULL) {
-        j = atoi(a);
-            if (j==1) { bigraph_add_edge(G,k1,i); }
-        i++;
-    }
-    k1++;
+            j = atoi(a);
+                if (j==1) { bigraph_add_edge(G,k1,i); }
+            i++;
+        }
+        k1++;
     }
 
-    if (k1 != n1) 
-        REprintf("binarymatrix_in: # left vertices incorret %d\n", k1);
-        //fprintf(stderr, "binarymatrix_in: # left vertices incorret %d\n", k1);
-    if (k2 != n2) 
-        REprintf("binarymatrix_in: # right vertices incorret %d\n", k2);
-        //fprintf(stderr, "binarymatrix_in: # right vertices incorret %d\n", k2);
+    if (k1 != n1) {
+        error("binarymatrix_in: # left vertices incorret\n");
+    }
+    if (k2 != n2) {
+        error("binarymatrix_in: # right vertices incorret\n");
+    }
 
     return G;
 }
@@ -268,11 +257,11 @@ void bigraph_edgelist_out(FILE *fp, BiGraph *G)
     unsigned int i, j;
     fprintf(fp, "EdgeList %d %d %d\n", n1, n2, e);
     for (i = 0; i < n1; i++) {
-    for (j = 0; j < n2; j++) {
-        if (bigraph_edge_exists(G, i, j)) {
-        fprintf(fp, "%s\t%s\n", G->_label_v1[i], G->_label_v2[j]);
+        for (j = 0; j < n2; j++) {
+            if (bigraph_edge_exists(G, i, j)) {
+            fprintf(fp, "%s\t%s\n", G->_label_v1[i], G->_label_v2[j]);
+            }
         }
-    }
     }
     return;
 }

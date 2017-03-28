@@ -189,7 +189,7 @@ SEXP R_biclique(SEXP R_file, SEXP R_lleast, SEXP R_rleast, SEXP R_degree, SEXP R
         UNPROTECT(1);
     }
 
-    bigraph_free(G);
+    //bigraph_free(G);
 
     return R_data;
 }
