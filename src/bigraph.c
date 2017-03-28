@@ -1,8 +1,9 @@
-/* API for Bit-Based Adjacency Matrix for undirected graphs */
-/* Implement functions defined in graph.h */
-/* Graph Theory Team, Computer Science Department */
-/* University of Tennessee, Knoxville */
-/* Yun Zhang, yzhang@cs.utk.edu, December 12, 2004 */
+/* API for Bit-Based Adjacency Matrix for undirected graphs 
+ * Implement functions defined in graph.h 
+ * Author: Yuping Lu
+ * Created: February 2017
+ * Last Update: March 2017
+ */
 
 
 #include <string.h>

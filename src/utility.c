@@ -1,8 +1,9 @@
-/* APIs of utility for undirected graphs */
-/* Implement functions defined in utility.h */
-/* Graph Theory Team, Computer Science Department */
-/* University of Tennessee, Knoxville */
-/* Yun Zhang, yzhang@cs.utk.edu, January 20, 2005 */
+/* APIs of utility for undirected graphs 
+ * Implement functions defined in utility.h 
+ * Author: Yuping Lu
+ * Created: February 2017
+ * Last Update: March 2017
+ */
 
 
 #include <string.h>  /* memset */

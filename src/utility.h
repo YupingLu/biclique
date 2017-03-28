@@ -1,7 +1,8 @@
-/* APIs of utility for undirected graphs */
-/* Graph Theory Team, Computer Science Department */ 
-/* University of Tennessee, Knoxville */
-/* Yun Zhang, yzhang@cs.utk.edu, January 20, 2005 */
+/* APIs of utility for undirected graphs 
+ * Author: Yuping Lu
+ * Created: February 2017
+ * Last Update: March 2017
+ */
 
 #ifndef __UTILITY_H
 #define __UTILITY_H

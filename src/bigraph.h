@@ -1,7 +1,8 @@
-/* API for Bit-Based Adjacency Matrix for undirected bipartite graphs */
-/* Graph Theory Team, Computer Science Department */ 
-/* University of Tennessee, Knoxville */
-/* Yun Zhang, yzhang@cs.utk.edu, September 2006 */
+/* API for Bit-Based Adjacency Matrix for undirected bipartite graphs
+ * Author: Yuping Lu
+ * Created: February 2017
+ * Last Update: March 2017
+ */
 
 #ifndef __BIGRAPH_H
 #define __BIGRAPH_H
