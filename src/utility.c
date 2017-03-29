@@ -16,19 +16,17 @@ Set *make_set(unsigned int set_size)
     Set *S;
     int num_ints;
 
-    S = (Set *) malloc(sizeof(Set));
+    S = (Set *) Calloc(1, Set);
     if (S == NULL) { 
         error("malloc");
-        //perror("malloc"); exit(-1); 
     }
     S->_set_size = set_size;
     S->_num_elements = 0;
     num_ints = set_size / (sizeof(unsigned int) * CHAR_BITS);
     if ((set_size % (sizeof(unsigned int) * CHAR_BITS)) != 0) num_ints++;
-    S->_set = (unsigned int *) malloc(num_ints * sizeof(unsigned int));
+    S->_set = (unsigned int *) Calloc(num_ints, unsigned int);
     if (S->_set == NULL) { 
         error("malloc");
-        //perror("malloc"); exit(-1); 
     }
     memset(S->_set, 0, num_ints * sizeof(unsigned int));
 
@@ -39,8 +37,8 @@ Set *make_set(unsigned int set_size)
 void free_set(Set *S)
 {
     if (S != NULL) {
-        if (S->_set) free(S->_set);
-        free(S);
+        if (S->_set) Free(S->_set);
+        Free(S);
     }
 }
 
@@ -103,16 +101,14 @@ Mapping *make_mapping(unsigned int size)
 {
     Mapping *M;
     int i;
-    M = (Mapping *) malloc(sizeof(Mapping));
+    M = (Mapping *) Calloc(1, Mapping);
     if (M == NULL) { 
         error("malloc");
-        //perror("malloc"); exit(-1); 
     }
     M->_size = size;
-    M->_mapping = (short *) malloc(size * sizeof(short));
+    M->_mapping = (short *) Calloc(size, short);
     if (M == NULL) { 
         error("malloc");
-        //perror("malloc"); exit(-1); 
     }
     for (i = 0; i < size; i++) 
         set_mapping(M, i, -1);
@@ -123,8 +119,8 @@ Mapping *make_mapping(unsigned int size)
 void free_mapping(Mapping *M)
 {
     if (M != NULL) {
-        if (M->_mapping) free(M->_mapping);
-        free(M);
+        if (M->_mapping) Free(M->_mapping);
+        Free(M);
     }
 }
 
@@ -193,29 +189,25 @@ double get_cur_time() {
 Memory *memory_make(size_t num_bytes)
 {
     Memory *M;
-    M = (Memory *) malloc(sizeof(Memory));
+    M = (Memory *) Calloc(1, Memory);
     if (M == NULL) { 
         error("malloc");
-        //perror("malloc"); exit(1); 
     }
     M->_num_bytes = num_bytes;
     M->_num_chunk = 1;
     M->_cur_chunk = 0;
-    M->_head = (unsigned char **) calloc(MAX_NUM_CHUNK, sizeof(unsigned char*));
+    M->_head = (unsigned char **) Calloc(MAX_NUM_CHUNK, unsigned char*);
     if (M->_head == NULL) { 
         error("calloc");
-        //perror("calloc"); exit(1); 
     }
-    M->_head[0] = (unsigned char *) malloc(num_bytes);
+    M->_head[0] = (unsigned char *) Calloc(num_bytes, unsigned char);
     if (M->_head[0] == NULL) { 
         error("malloc");
-        //perror("malloc"); exit(1); 
     }
     M->_sbrk = M->_head[0];
-    M->_tail = (unsigned char **) calloc(MAX_NUM_CHUNK, sizeof(unsigned char*));
+    M->_tail = (unsigned char **) Calloc(MAX_NUM_CHUNK, unsigned char*);
     if (M->_tail == NULL) { 
         error("calloc");
-        //perror("calloc"); exit(1); 
     }
     M->_tail[0] = M->_head[0] + num_bytes;
     return M;
@@ -227,10 +219,10 @@ void memory_free(Memory *M)
     int i;  
     if (M == NULL) return;
     for (i = 0; i < M->_num_chunk; i++)
-        if (M->_head[i]) free(M->_head[i]);
-    free(M->_head);
-    free(M->_tail);
-    free(M);
+        if (M->_head[i]) Free(M->_head[i]);
+    Free(M->_head);
+    Free(M->_tail);
+    Free(M);
 }
 
 /* Malloc one more memory chunk */
@@ -239,10 +231,9 @@ int memory_malloc_chunk(Memory *M)
     if (M->_num_chunk == MAX_NUM_CHUNK) return -1;
     M->_num_chunk++;
     M->_cur_chunk++;
-    M->_head[M->_cur_chunk] = (unsigned char *) malloc(M->_num_bytes);
+    M->_head[M->_cur_chunk] = (unsigned char *) Calloc(M->_num_bytes, unsigned char);
     if (M->_head[M->_cur_chunk] == NULL) { 
         error("malloc");
-        //perror("malloc"); exit(1); 
     }
     M->_tail[M->_cur_chunk] = M->_head[M->_cur_chunk] + M->_num_bytes;
     M->_sbrk = M->_head[M->_cur_chunk];
@@ -255,7 +246,7 @@ void memory_reset(Memory *M)
     int i;
     for (i = M->_cur_chunk+1; i < M->_num_chunk; i++) {
     if (M->_head[i]) {
-        free(M->_head[i]);
+        Free(M->_head[i]);
         M->_head[i] = NULL;
         M->_tail[i] = NULL;
         }

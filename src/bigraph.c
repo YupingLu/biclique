@@ -20,7 +20,6 @@ BiGraph *bigraph_make(unsigned int num_v1, unsigned int num_v2)
     int num_ints_v1 = bit_num_ints(num_v2);
     int num_ints_v2 = bit_num_ints(num_v1);
     
-    //G = (BiGraph *) Calloc(1, BiGraph);
     G = (BiGraph *) R_alloc(1, sizeof(BiGraph));
     if (G == NULL) { 
         error("malloc");
@@ -31,8 +30,6 @@ BiGraph *bigraph_make(unsigned int num_v1, unsigned int num_v2)
     G->_num_bytes_v1 = num_ints_v1 * sizeof(int);
     G->_num_bytes_v2 = num_ints_v2 * sizeof(int);
 
-    //G->_label_v1 = (char **) Calloc(num_v1, char *);
-    //G->_label_v2 = (char **) Calloc(num_v2, char *);
     G->_label_v1 = (char **) R_alloc(num_v1, sizeof(char *));
     G->_label_v2 = (char **) R_alloc(num_v2, sizeof(char *));
 
@@ -40,12 +37,11 @@ BiGraph *bigraph_make(unsigned int num_v1, unsigned int num_v2)
         error("bigraph_make: malloc label");
     }
 
-    //G->_neighbor_v1 = (unsigned int **) Calloc(num_v1, unsigned int *);
     G->_neighbor_v1 = (unsigned int **) R_alloc(num_v1, sizeof(unsigned int *));
     if (G->_neighbor_v1 == NULL) { 
         error("malloc");
     }
-    //G->_neighbor_v1[0] = (unsigned int *) Calloc(G->_num_bytes_v1 * num_v1, unsigned int);
+
     G->_neighbor_v1[0] = (unsigned int *) R_alloc(num_ints_v1 * num_v1, sizeof(int));
     if (G->_neighbor_v1[0] == NULL) { 
         error("malloc");
@@ -53,12 +49,11 @@ BiGraph *bigraph_make(unsigned int num_v1, unsigned int num_v2)
     for (i = 0; i < num_v1; i++)
         G->_neighbor_v1[i] = G->_neighbor_v1[0] + i * num_ints_v1;
 
-    //G->_neighbor_v2 = (unsigned int **) Calloc(num_v2, unsigned int *);
     G->_neighbor_v2 = (unsigned int **) R_alloc(num_v2, sizeof(unsigned int *));
     if (G->_neighbor_v2 == NULL) { 
         error("malloc");
     }
-    //G->_neighbor_v2[0] = (unsigned int *) Calloc(G->_num_bytes_v2 * num_v2, unsigned int);
+
     G->_neighbor_v2[0] = (unsigned int *) R_alloc(num_ints_v2 * num_v2, sizeof(int));
     if (G->_neighbor_v2[0] == NULL) { 
         error("malloc"); 
@@ -66,8 +61,6 @@ BiGraph *bigraph_make(unsigned int num_v1, unsigned int num_v2)
     for (i = 0; i < num_v2; i++)
         G->_neighbor_v2[i] = G->_neighbor_v2[0] + i * num_ints_v2;
     
-    //G->_degree_v1 = (unsigned short *) Calloc(num_v1, unsigned short);
-    //G->_degree_v2 = (unsigned short *) Calloc(num_v2, unsigned short);
     G->_degree_v1 = (unsigned short *) R_alloc(num_v1, sizeof(unsigned short));
     G->_degree_v2 = (unsigned short *) R_alloc(num_v2, sizeof(unsigned short));
     if (!G->_degree_v1 | !G->_degree_v2) { 
@@ -81,28 +74,6 @@ BiGraph *bigraph_make(unsigned int num_v1, unsigned int num_v2)
     
     return G;
 }
-
-
-/* Free the memory of a graph */
-/*void bigraph_free(BiGraph *G)
-{
-    int i;
-    if (G != NULL) {
-        if (G->_neighbor_v1) {
-            if (G->_neighbor_v1[0]) Free(G->_neighbor_v1[0]);
-            Free(G->_neighbor_v1);
-        }
-        if (G->_neighbor_v2) {
-            if (G->_neighbor_v2[0]) Free(G->_neighbor_v2[0]);
-            Free(G->_neighbor_v2);
-        }
-        for (i = 0; i < G->_num_v1; i++) Free(G->_label_v1[i]);
-        for (i = 0; i < G->_num_v2; i++) Free(G->_label_v2[i]);
-        if (G->_degree_v1) Free(G->_degree_v1);
-        if (G->_degree_v2) Free(G->_degree_v2);
-        Free(G);
-    }
-}*/
 
 /** I/O functions for Graph **/
 
@@ -190,9 +161,6 @@ BiGraph * bigraph_edgelist_in(FILE *fp)
     }
 
     (void) hdestroy();
-    //Free(id1);
-    //Free(id2);
-    
     return G;
 }
 

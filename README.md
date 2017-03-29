@@ -21,4 +21,4 @@ Compute the bicliques
 > bicliques = bi.clique("example1.el")
 
 Print the bicliques
-> bi.print(bicliques)
+> bi.print()
