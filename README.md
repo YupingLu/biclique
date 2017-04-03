@@ -10,7 +10,8 @@ Load the package
 > library(biclique)
 
 Add the number of vertices and edges to the original input graph. If your input file already has these values, you don't have to run this command.
-> bi.format("example1.el")  #edgelist format
+> bi.format("example2.el")  #edgelist format
+
 OR
 > bi.format("example5.bmat", 1) #binary matrix format
 
