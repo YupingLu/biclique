@@ -27,10 +27,10 @@ Print the bicliques
 
 ### binary matrix format
 Compute the degree of each vertex.
-> degreelist = bi.degree("example4.bmat", 1)
+> degreelist = bi.degree("example4.bmat", filetype = 1)
 
 Compute the bicliques
-> bicliques = bi.clique("example4.bmat", 1)
+> bicliques = bi.clique("example4.bmat", filetype = 1)
 
 Print the bicliques
 > bi.print()
