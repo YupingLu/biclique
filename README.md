@@ -25,6 +25,9 @@ Compute the bicliques
 Print the bicliques
 > bi.print()
 
+You can also choose the threshold size for computed bicliques. For example the generated bicliques should be larger or equal to K3,2
+> bicliques = bi.clique("example1.el", 3, 2)
+
 ### binary matrix format
 Compute the degree of each vertex.
 > degreelist = bi.degree("example4.bmat", filetype = 1)
