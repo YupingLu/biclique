@@ -82,7 +82,7 @@ BiGraph * bigraph_edgelist_in(FILE *fp)
 {
     int u, v;
     unsigned int n1, n2, e;
-    int k1=0, k2=0, edges=0, r, i;
+    int k1=0, k2=0, edges=0, r;
     char word1[100], word2[100];
     BiGraph *G;
     int *id, *id1, *id2;

@@ -68,7 +68,7 @@ void maximal_biclique(BiGraph *G, int *profile, int **g_right, int **g_left)
  */
 SEXP R_biclique(SEXP R_file, SEXP R_lleast, SEXP R_rleast, SEXP R_degree, SEXP R_version, SEXP R_print, SEXP R_input)
 {
-    BiGraph *G;
+    BiGraph *G = NULL;
     SEXP R_data;
 
     const char *filepath = CHARPT(R_file, 0);

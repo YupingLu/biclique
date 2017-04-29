@@ -31,7 +31,7 @@ inline void swap_vid(vid_t *array, int i, int j)
 
 void bubble_sort_inc(vid_t *array, int start, int end, int *noc)
 {
-    int i, j, tmp;
+    int i, j;
     for (i = 0; i < end-start; i++) {
     for (j = i+1; j < end-start; j++) {
         if (noc[j] < noc[i]) {
@@ -45,7 +45,7 @@ void bubble_sort_inc(vid_t *array, int start, int end, int *noc)
 
 void bubble_sort_dec(vid_t *array, int start, int end, int *noc)
 {
-    int i, j, tmp;
+    int i, j;
     for (i = 0; i < end-start; i++) {
     for (j = i+1; j < end-start; j++) {
         if (noc[j] > noc[i]) {
@@ -58,7 +58,7 @@ void bubble_sort_dec(vid_t *array, int start, int end, int *noc)
 
 void comb_sort(vid_t *array, int start, int end, int *noc)
 {
-    int gap, swaps, i, tmp;
+    int gap, swaps, i;
     gap = end-start;  // initialize gap size
     while (gap > 1 || swaps != 0) {
     if (gap > 1) {

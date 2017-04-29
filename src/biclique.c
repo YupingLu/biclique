@@ -234,7 +234,7 @@ void biclique_find_improve(int **g_right, int **g_left, BiGraph *G, num_t *ncliq
     unsigned int n1 = G->_num_v1;
     vid_t new_left[nl];
     vid_t new_right[ce];
-    vid_t u, v, w, i, j, k;
+    vid_t u, v, w, j, k;
     int new_nc, new_nl, new_ne, new_ce;
     int count, is_maximal=1;
     int x, noc[ce-ne];
