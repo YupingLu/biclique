@@ -108,13 +108,13 @@ bi.degree <- function(filename, filetype = 0)
                                      as.integer(version), as.integer(getclique), as.integer(filetype))
 
     degree = unlist(degreelist)
-    w = data.frame(degree)
+    #w = data.frame(degree)
 
     # print edgelist
-    on.exit(print(w))
+    #on.exit(print(w))
 
     # returned are the biclique degree data.frame
-    invisible(degreelist)
+    #invisible(degreelist)
 }
 
 #' @title Print the bicliques
@@ -154,7 +154,11 @@ bi.print <- function(envir = .GlobalEnv$.bienv)
 #'
 #' @description
 #' This funtion will calculate the number of vertices and edges and add them to the head of the input file.
+#' For edge list file, three entries will be added. And they are: the number of left vertices, the number of right vertices and the number of edges.
+#' For binary matrix file, two entries will be added. And they are: the number of left vertices and the number of right vertices.
 #' The original input file will be changed.
+#' If your input file already have those entries, pleast don't run this command. Otherwise, you'll get error results after running bi.clique.
+#' Please also note that no comment characters are allowed in the input file.
 #'
 #' @param filename Input file name
 #' @param filetype Input file format <default = 0>. 0-edge list, 1-binary matrix.

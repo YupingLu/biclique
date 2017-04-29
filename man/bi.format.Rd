@@ -13,7 +13,11 @@ bi.format(filename, filetype = 0)
 }
 \description{
 This funtion will calculate the number of vertices and edges and add them to the head of the input file.
+For edge list file, three entries will be added. And they are: the number of left vertices, the number of right vertices and the number of edges.
+For binary matrix file, two entries will be added. And they are: the number of left vertices and the number of right vertices.
 The original input file will be changed.
+If your input file already have those entries, pleast don't run this command. Otherwise, you'll get error results after running bi.clique.
+Please also note that no comment characters are allowed in the input file.
 }
 \examples{
 \dontrun{
