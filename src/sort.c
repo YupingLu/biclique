@@ -59,6 +59,7 @@ void bubble_sort_dec(vid_t *array, int start, int end, int *noc)
 void comb_sort(vid_t *array, int start, int end, int *noc)
 {
     int gap, swaps, i;
+    swaps = 0; 
     gap = end-start;  // initialize gap size
     while (gap > 1 || swaps != 0) {
     if (gap > 1) {
