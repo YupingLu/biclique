@@ -1,5 +1,5 @@
 Package: biclique
-Title: An R Package to Compute Biclique
+Title: An R Package to Compute Maximal Complete Bipartite Graphs
 Version: 1.0.0
 Authors@R: c(
     person("Yuping", "Lu", , "yupinglu@utk.edu", role = c("aut", "cre")),
@@ -7,7 +7,7 @@ Authors@R: c(
     person("Michael", "Langston", role = "aut")
     )
 Encoding: UTF-8
-Description: A tool for enumerating maximal biclique in a bipartite graph. The input should be a edge list file or a binary matrix file. The output are maximal complete bipartite graphs.
+Description: A tool for enumerating maximal complete bipartite graphs. The input should be a edge list file or a binary matrix file. The output are maximal complete bipartite graphs.
 URL: https://github.com/YupingLu/biclique
 BugReports: https://github.com/YupingLu/biclique/issues
 Depends:
