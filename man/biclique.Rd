@@ -4,7 +4,7 @@
 \name{biclique}
 \alias{biclique}
 \alias{biclique-package}
-\title{An R package to compute bicliques}
+\title{An R Package to Compute Bicliques}
 \description{
 biclique package.
 }
