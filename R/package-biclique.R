@@ -2,9 +2,7 @@
 #'
 #' @name biclique
 #'
-#' @useDynLib biclique,
-#  ### API
-#'  R_biclique
+#' @useDynLib biclique, .registration = TRUE
 #'
 #' @docType package
 #' @title An R Package to Compute Bicliques
