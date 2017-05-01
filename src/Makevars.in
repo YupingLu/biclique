@@ -2,7 +2,7 @@
 
 PKG_CFLAGS = -O3 -g -D_FILE_OFFSET_BITS=64
 
-OBJECTS = bigraph.o utility.o sort.o biclique.o R_biclique_driver.o
+OBJECTS = bigraph.o utility.o sort.o biclique.o R_biclique_driver.o biclique_init.o
 
 ### Start making here.
 all: $(SHLIB)
