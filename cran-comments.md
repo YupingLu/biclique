@@ -5,7 +5,9 @@
 
 ## R CMD check results
 
-There were no ERRORs, WARNING or NOTEs
+There were no ERRORs or WARNINGs.
+There is 1 NOTE.
+This is my first submission.
 
 ## Reverse dependencies
 
