@@ -7,6 +7,6 @@
 
 There were no ERRORs, WARNING or NOTEs
 
-## Reverse dependencies
+## Downstream dependencies
 
 There are currently no downstream dependencies for this package.
