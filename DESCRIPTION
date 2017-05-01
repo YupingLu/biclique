@@ -1,5 +1,5 @@
 Package: biclique
-Title: An R package to compute bicliques
+Title: An R Package to Compute Bicliques
 Version: 1.0.0
 Authors@R: c(
     person("Yuping", "Lu", , "yupinglu@utk.edu", role = c("aut", "cre")),
@@ -7,7 +7,7 @@ Authors@R: c(
     person("Michael", "Langston", role = "aut")
     )
 Encoding: UTF-8
-Description: This package is used to enumerate bicliques in the bipartite graph.
+Description: A tool for enumerating maximal bicliques in a bipartite graph.
 URL: https://github.com/YupingLu/biclique
 BugReports: https://github.com/YupingLu/biclique/issues
 Depends:
