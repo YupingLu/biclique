@@ -12,4 +12,3 @@ biclique package.
 Yuping Lu, Charles Phillips, Michael Langston
 }
 \keyword{biclique}
-

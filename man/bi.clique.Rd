@@ -36,4 +36,3 @@ bicliques = bi.clique("example4.bmat")
 }
 
 }
-

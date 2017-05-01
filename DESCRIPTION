@@ -16,4 +16,4 @@ Imports:
     graphics,
     utils
 License: GPL-2 | file LICENSE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

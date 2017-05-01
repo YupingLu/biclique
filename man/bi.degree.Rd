@@ -23,4 +23,3 @@ degreelist$u1
 }
 
 }
-

@@ -26,4 +26,3 @@ bi.format("example5.bmat", 1)
 }
 
 }
-
