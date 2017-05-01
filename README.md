@@ -1,5 +1,5 @@
 # biclique
-An R package to compute bicliques
+An R package to compute maximal bicliques
 
 ### Install the package
 > devtools::install_github("YupingLu/biclique")
