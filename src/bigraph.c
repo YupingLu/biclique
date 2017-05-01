@@ -5,12 +5,68 @@
  * Last Update: March 2017
  */
 
-
 #include <string.h>
-#include <search.h>
 #include "bigraph.h"
 
 #define LINE_LENGTH 1000
+
+// trie node
+struct TrieNode {
+    struct TrieNode *children[256];
+    int isLeaf;
+};
+
+// Returns new trie node (initialized to NULLs)
+struct TrieNode *getNode(void) {
+    struct TrieNode *pNode = (struct TrieNode *)R_alloc(1, sizeof(struct TrieNode));
+
+    if (pNode) {
+        int i;
+        pNode->isLeaf = -1;
+        for (i = 0; i < 256; i++)
+            pNode->children[i] = NULL;
+    }
+
+    return pNode;
+}
+
+void insert(struct TrieNode *root, const char *key, int id) {
+    int level;
+    int length = strlen(key);
+    int index;
+    struct TrieNode *pCrawl = root;
+
+    for (level = 0; level < length; level++) {
+        index = key[level];
+        if (!pCrawl->children[index])
+            pCrawl->children[index] = getNode();
+
+        pCrawl = pCrawl->children[index];
+    }
+
+    // mark last node as leaf
+    pCrawl->isLeaf = id;
+}
+
+// Returns id if key presents in trie
+int search(struct TrieNode *root, const char *key) {
+    int level;
+    int length = strlen(key);
+    int index;
+    struct TrieNode *pCrawl = root;
+
+    for (level = 0; level < length; level++) {
+        index = key[level];
+
+        if (!pCrawl->children[index])
+            return -1;
+
+        pCrawl = pCrawl->children[index];
+    }
+
+    if(pCrawl == NULL) return -1;
+    else return pCrawl->isLeaf;
+}
 
 /* Malloc and initialize a graph, returns a pointer to it */
 BiGraph *bigraph_make(unsigned int num_v1, unsigned int num_v2)
@@ -85,61 +141,42 @@ BiGraph * bigraph_edgelist_in(FILE *fp)
     int k1=0, k2=0, edges=0, r;
     char word1[100], word2[100];
     BiGraph *G;
-    int *id, *id1, *id2;
-    ENTRY item;
-    ENTRY *found_item;
+    int id;
     
     if (fscanf(fp, "%d %d %d", &n1, &n2, &e) != 3) {
         error("Bad file format: n1 n2 e incorrect");
     }
     
     G = bigraph_make(n1, n2);
-    
-    /* create a hash table */
-    (void) hcreate(n1+n2);
-    id1 = (int *) R_alloc(n1, sizeof(int));
-    id2 = (int *) R_alloc(n2, sizeof(int));
-    
+
+    /* create a trietree */
+    struct TrieNode *root = getNode();
+
     while ((r = fscanf(fp, "%s\t%s", word1, word2)) != EOF) {
         if (r != 2) {
-            (void) hdestroy();
             error("Bad file format: label1 label2 incorrect");
         }
 
-        item.key = word1;
-        if ((found_item = hsearch(item, FIND)) != NULL) {
-            id = (int *) (found_item->data);
-            u = *id;
-        }
-        else {
-            u = k1; 
+        if((id = search(root, word1)) != -1) {
+            u = id;
+        } else {
+            u = k1;
             G->_label_v1[k1++] = Strdup(word1);
-            item.key = G->_label_v1[u];
-            id1[u] = u;
-            item.data = (void *) (id1+u);
-            (void) hsearch(item, ENTER);
+            insert(root, word1, u);
         }
 
-        item.key = word2;
-        if ((found_item = hsearch(item, FIND)) != NULL) {
-            id = (int *) (found_item->data);
-            v = *id;
-        }
-        else {
-            v = k2; 
+        if((id = search(root, word2)) != -1) {
+            v = id;
+        } else {
+            v = k2;
             G->_label_v2[k2++] = Strdup(word2);
-            item.key = G->_label_v2[v];
-            id2[v] = v;
-            item.data = (void *) (id2+v);
-            (void) hsearch(item, ENTER);
-        }
+            insert(root, word2, v);
+        }        
 
         if (k1 > n1) {
-            (void) hdestroy();
             error("Bad file format: too many left vertex labels");
         }
         if (k2 > n2) {
-            (void) hdestroy();
             error("Bad file format: too many right vertex labels");
         }
         
@@ -148,19 +185,15 @@ BiGraph * bigraph_edgelist_in(FILE *fp)
     }
     
     if (edges != e) {
-        (void) hdestroy();
         error("edgelist_in: number of edges incorrect\n");
     }
     if (k1 != n1) {
-        (void) hdestroy();
         error("edgelist_in: number of left vertices incorrect\n");
     }
     if (k2 != n2) {
-        (void) hdestroy();
         error("edgelist_in: number of right vertices incorrect\n");
     }
 
-    (void) hdestroy();
     return G;
 }
 
