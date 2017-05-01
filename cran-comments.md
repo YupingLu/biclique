@@ -1,7 +1,7 @@
 ## Test environments
 * OS X, R 3.3.0
 * Ubuntu 16.04, R 3.3.3
-* win-builder (devel and release)
+* Windows 10, R 3.4.0
 
 ## R CMD check results
 
