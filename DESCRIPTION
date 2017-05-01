@@ -7,7 +7,7 @@ Authors@R: c(
     person("Michael", "Langston", role = "aut")
     )
 Encoding: UTF-8
-Description: A tool for enumerating maximal bicliques in a bipartite graph.
+Description: A tool for enumerating maximal Bicliques in a bipartite graph.
 URL: https://github.com/YupingLu/biclique
 BugReports: https://github.com/YupingLu/biclique/issues
 Depends:
