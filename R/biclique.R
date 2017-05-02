@@ -18,8 +18,9 @@
 #' @examples
 #' bicliques = bi.clique("example1.el")
 #' bicliques = bi.clique("example1.el", 3, 2)
-#' bicliques = bi.clique("example4.bmat")
-#' 
+#' bicliques = bi.clique("example4.bmat", filetype = 1)
+#' # check a biclique
+#' bicliques$biclique1
 #'
 #' @export
 bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, filetype = 0, envir = .GlobalEnv$.bienv)
@@ -89,7 +90,7 @@ bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, filetype = 
 #' degreelist = bi.degree("example1.el")
 #' degreelist = bi.degree("example4.bmat", 1)
 #' #get the vertex degree
-#' degreelist$u1
+#' degreelist['A']
 #'
 #' @export
 bi.degree <- function(filename, filetype = 0)
@@ -167,35 +168,42 @@ bi.print <- function(envir = .GlobalEnv$.bienv)
 #' @export
 bi.format <- function(filename, filetype = 0)
 {
-    # read file
-    temp.df = read.table(filename, sep="\t")
-    if(filetype == 0) {
-        # count the number of left vertices
-        left = length(unique(temp.df$V1))
-        # count the number of left vertices
-        right = length(unique(temp.df$V2))
-        # count the number of edges
-        edges = length(temp.df$V1)
+    # check the head. if they alreay contain the necessary entries, quit.
+    title.line = readLines(filename, n=1)
+    titles = unlist(strsplit(title.line, "\t"))
+    len = length(titles)
+    
+    if(!((filetype == 0 && len == 3) || (filetype == 1 && len == 2))) {
+        # read file
+        temp.df = read.table(filename, sep="\t")
+        if(filetype == 0) {
+            # count the number of left vertices
+            left = length(unique(temp.df$V1))
+            # count the number of left vertices
+            right = length(unique(temp.df$V2))
+            # count the number of edges
+            edges = length(temp.df$V1)
 
-        # write data to the input file
-        cat(left, file=filename)
-        cat("\t", file=filename, append=TRUE)
-        cat(right, file=filename, append=TRUE)
-        cat("\t", file=filename, append=TRUE)
-        cat(edges, file=filename, append=TRUE)
-        cat("\n", file=filename, append=TRUE)
-        write.table(temp.df, filename, append=TRUE, quote = FALSE, sep="\t", row.names = FALSE, col.names = FALSE)
-    }else {
-        # count the number of left vertices
-        left = length(unique(row.names(temp.df)))
-        # count the number of left vertices
-        right = length(unique(colnames(temp.df)))
+            # write data to the input file
+            cat(left, file=filename)
+            cat("\t", file=filename, append=TRUE)
+            cat(right, file=filename, append=TRUE)
+            cat("\t", file=filename, append=TRUE)
+            cat(edges, file=filename, append=TRUE)
+            cat("\n", file=filename, append=TRUE)
+            write.table(temp.df, filename, append=TRUE, quote = FALSE, sep="\t", row.names = FALSE, col.names = FALSE)
+        }else {
+            # count the number of left vertices
+            left = length(unique(row.names(temp.df)))
+            # count the number of left vertices
+            right = length(unique(colnames(temp.df)))
 
-        # write data to the input file
-        cat(left, file=filename)
-        cat("\t", file=filename, append=TRUE)
-        cat(right, file=filename, append=TRUE)
-        cat("\n", file=filename, append=TRUE)
-        suppressWarnings(write.table(temp.df, filename, append=TRUE, quote = FALSE, sep="\t", row.names = TRUE, col.names = TRUE))
+            # write data to the input file
+            cat(left, file=filename)
+            cat("\t", file=filename, append=TRUE)
+            cat(right, file=filename, append=TRUE)
+            cat("\n", file=filename, append=TRUE)
+            suppressWarnings(write.table(temp.df, filename, append=TRUE, quote = FALSE, sep="\t", row.names = TRUE, col.names = TRUE))
+        }
     }
 }

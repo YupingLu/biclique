@@ -18,6 +18,6 @@ This function will output the degree of each vertex.
 degreelist = bi.degree("example1.el")
 degreelist = bi.degree("example4.bmat", 1)
 #get the vertex degree
-degreelist$u1
+degreelist['A']
 
 }

@@ -31,7 +31,8 @@ Two versions of algorithms are implemented in this function, you can choose eith
 \examples{
 bicliques = bi.clique("example1.el")
 bicliques = bi.clique("example1.el", 3, 2)
-bicliques = bi.clique("example4.bmat")
-
+bicliques = bi.clique("example4.bmat", filetype = 1)
+# check a biclique
+bicliques$biclique1
 
 }
