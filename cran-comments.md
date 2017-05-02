@@ -1,3 +1,9 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Simplified the title and added a reference papaer in the Description field.
+* All examples are tested during R CMD check.
+
 ## Test environments
 * OS X, R 3.4.0
 * Ubuntu 16.04, R 3.4.0
