@@ -29,9 +29,9 @@ This package supports edgelist and binary matrix file format.
 Two versions of algorithms are implemented in this function, you can choose either one to get bicliques.
 }
 \examples{
-bicliques = bi.clique("example1.el")
-bicliques = bi.clique("example1.el", 3, 2)
-bicliques = bi.clique("example4.bmat", filetype = 1)
+bicliques = bi.clique(system.file("extdata", "example1.el", package = "biclique"))
+bicliques = bi.clique(system.file("extdata", "example1.el", package = "biclique"), 3, 2)
+bicliques = bi.clique(system.file("extdata", "example4.bmat", package = "biclique"), filetype = 1)
 # check a biclique
 bicliques$biclique1
 

@@ -13,7 +13,7 @@ bi.print(envir = .GlobalEnv$.bienv)
 You can pass results from function bi.clique to this function to visualize the bicliques.
 }
 \examples{
-bicliques = bi.clique("example1.el")
+bicliques = bi.clique(system.file("extdata", "example1.el", package = "biclique"))
 bi.print()
 
 }

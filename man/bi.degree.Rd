@@ -15,8 +15,8 @@ bi.degree(filename, filetype = 0)
 This function will output the degree of each vertex.
 }
 \examples{
-degreelist = bi.degree("example1.el")
-degreelist = bi.degree("example4.bmat", 1)
+degreelist = bi.degree(system.file("extdata", "example1.el", package = "biclique")) 
+degreelist = bi.degree(system.file("extdata", "example4.bmat", package = "biclique"), 1)
 #get the vertex degree
 degreelist['A']
 

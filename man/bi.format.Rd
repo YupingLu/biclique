@@ -20,7 +20,7 @@ If your input file already have those entries, pleast don't run this command. Ot
 Please also note that no comment characters are allowed in the input file.
 }
 \examples{
-bi.format("example2.el")
-bi.format("example5.bmat", 1)
+bi.format(system.file("extdata", "example2.el", package = "biclique"))
+bi.format(system.file("extdata", "example5.bmat", package = "biclique"), 1)
 
 }
