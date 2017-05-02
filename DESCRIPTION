@@ -8,7 +8,7 @@ Authors@R: c(
     )
 Encoding: UTF-8
 Description: A tool for enumerating maximal complete bipartite graphs. The input should be a edge list file or a binary matrix file. 
-             The output are maximal complete bipartite graphs. Algorithms used can be found in this paper Y Zhang et al. BMC Bioinformatics 2014 15:110 <doi: 10.1186/1471-2105-15-110>.
+             The output are maximal complete bipartite graphs. Algorithms used can be found in this paper Y Zhang et al. BMC Bioinformatics 2014 15:110 <doi:10.1186/1471-2105-15-110>.
 URL: https://github.com/YupingLu/biclique
 BugReports: https://github.com/YupingLu/biclique/issues
 Depends:

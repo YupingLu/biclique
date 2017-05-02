@@ -1,6 +1,7 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
+* Space after "doi:" has been removed.
 * Simplified the title and added a reference papaer in the Description field.
 * All examples are tested during R CMD check.
 
