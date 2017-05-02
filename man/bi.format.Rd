@@ -20,9 +20,7 @@ If your input file already have those entries, pleast don't run this command. Ot
 Please also note that no comment characters are allowed in the input file.
 }
 \examples{
-\dontrun{
 bi.format("example2.el")
 bi.format("example5.bmat", 1)
-}
 
 }

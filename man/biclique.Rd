@@ -4,8 +4,11 @@
 \name{biclique}
 \alias{biclique}
 \alias{biclique-package}
-\title{An R Package to Compute Bicliques}
+\title{Maximal Complete Bipartite Graphs}
 \description{
+A tool for enumerating maximal complete bipartite graphs. The input should be a edge list file or a binary matrix file. The output are maximal complete bipartite graphs. Algorithms used can be found in this paper Y Zhang et al. BMC Bioinformatics 2014 15:110 <doi: 10.1186/1471-2105-15-110>.
+}
+\details{
 biclique package.
 }
 \author{

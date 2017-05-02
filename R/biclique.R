@@ -16,11 +16,10 @@
 #' @param envir biclique environment
 #'
 #' @examples
-#' \dontrun{
 #' bicliques = bi.clique("example1.el")
 #' bicliques = bi.clique("example1.el", 3, 2)
 #' bicliques = bi.clique("example4.bmat")
-#' }
+#' 
 #'
 #' @export
 bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, filetype = 0, envir = .GlobalEnv$.bienv)
@@ -87,12 +86,10 @@ bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, filetype = 
 #' @param filetype Input file format <default = 0>. 0-edge list, 1-binary matrix.
 #'
 #' @examples
-#' \dontrun{
 #' degreelist = bi.degree("example1.el")
 #' degreelist = bi.degree("example4.bmat", 1)
 #' #get the vertex degree
 #' degreelist$u1
-#' }
 #'
 #' @export
 bi.degree <- function(filename, filetype = 0)
@@ -125,9 +122,8 @@ bi.degree <- function(filename, filetype = 0)
 #' @param envir biclique environment
 #'
 #' @examples
-#' \dontrun{
+#' bicliques = bi.clique("example1.el")
 #' bi.print()
-#' }
 #'
 #' @importFrom graphics barplot lines points text
 #' @export
@@ -164,10 +160,8 @@ bi.print <- function(envir = .GlobalEnv$.bienv)
 #' @param filetype Input file format <default = 0>. 0-edge list, 1-binary matrix.
 #'
 #' @examples
-#' \dontrun{
 #' bi.format("example2.el")
 #' bi.format("example5.bmat", 1)
-#' }
 #'
 #' @importFrom utils read.table write.table
 #' @export
