@@ -1,5 +1,5 @@
-Maximal Complete Bipartite Graphs
-=================================
+Maximal Biclique Enumeration in Bipartite Graphs
+================================================
 
 Description
 -----------
