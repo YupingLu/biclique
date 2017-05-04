@@ -1,0 +1,32 @@
+# R for travis: see documentation at
+# https://docs.travis-ci.com/user/languages/r
+# Also see the wiki:
+# https://github.com/craigcitro/r-travis/wiki
+
+language: r
+sudo: false
+cache: packages
+
+r_packages:
+  - graphics
+  - utils
+
+after_failure:
+  - ./travis-tool.sh dump_logs
+
+after_script:
+  - ./travis-tool.sh dump_logs_by_extension "timings"
+  - ./travis-tool.sh dump_sysinfo
+
+notifications:
+  email:
+    on_success: yupinglu89@gmail.com
+    on_failure: yupinglu89@gmail.com
+
+env:
+  global:
+    - R_BUILD_ARGS="--no-build-vignettes --no-manual --no-resave-data"
+    - R_CHECK_ARGS="--no-build-vignettes --no-manual --timings"
+    - R_CHECK_TIME="TRUE"
+    - R_CHECK_TESTS="TRUE"
+    - _R_CHECK_TIMINGS_="0"
