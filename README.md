@@ -16,6 +16,10 @@ A tool for enumerating maximal complete bipartite graphs. The input file should 
 
 Installation
 ------------
+The stable, CRAN-ready version can be installed with:
+
+    install.packages("biclique")
+
 The latest version can be obtained via:
 
     devtools::install_github("YupingLu/biclique")
