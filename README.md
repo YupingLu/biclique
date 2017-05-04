@@ -1,6 +1,8 @@
 Maximal Biclique Enumeration in Bipartite Graphs
 ================================================
 
+<https://cran.r-project.org/package=biclique>
+
 Description
 -----------
 A tool for enumerating maximal complete bipartite graphs. The input file should be tab delimited. This package supports edgelist and binary matrix format. You can try the example files in the inst directory. The output are maximal complete bipartite graphs.
