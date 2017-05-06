@@ -25,7 +25,7 @@ extern int *nnr;
 extern int *nnl;
 
 FILE *fp;
-char infn[100];
+char *infn;
 char *outfn;
 int DEGREE;
 char INPUT;
@@ -70,9 +70,8 @@ SEXP R_biclique(SEXP R_file, SEXP R_lleast, SEXP R_rleast, SEXP R_degree, SEXP R
 {
     BiGraph *G = NULL;
     SEXP R_data;
-
     const char *filepath = CHARPT(R_file, 0);
-    strcpy(infn, filepath);
+    infn = Strdup(filepath);
     if ((fp = fopen(infn, "r")) == NULL) {
         REprintf("Can't open file %s\n", infn);
         return R_NilValue;
@@ -90,7 +89,7 @@ SEXP R_biclique(SEXP R_file, SEXP R_lleast, SEXP R_rleast, SEXP R_degree, SEXP R
     if (INPUT==0) G = bigraph_edgelist_in(fp);
     else if (INPUT==1) G = bigraph_binarymatrix_in(fp);
     fclose(fp);
-
+    
     int n2 = G->_num_v2;
     int n1 = G->_num_v1;
 

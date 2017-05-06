@@ -8,7 +8,6 @@
 #define __UTILITY_H
 
 #include <R.h>
-#include <Rdefines.h>
 #include <Rinternals.h>
 
 #include <stdio.h>
@@ -24,9 +23,9 @@ typedef unsigned short vid_t;
 #define XBM  31
 #define RSV  5   /* >> 5 == / 32 */
 
-#define IS_SET(vector, bit)   (vector[(bit) >> RSV] & 1 << ((bit) & XBM))
-#define SET_BIT(vector, bit)  (vector[(bit) >> RSV] |= 1 << ((bit) & XBM))
-#define DEL_BIT(vector, bit)  (vector[(bit) >> RSV] &= ~(1 << ((bit) & XBM)))
+#define IS_SET(vector, bit)   (vector[(bit) >> RSV] & 1U << ((bit) & XBM))
+#define SET_BIT(vector, bit)  (vector[(bit) >> RSV] |= 1U << ((bit) & XBM))
+#define DEL_BIT(vector, bit)  (vector[(bit) >> RSV] &= ~(1U << ((bit) & XBM)))
 
 #define SET_VALUE(vector, index, value)  (vector[index] = value)
 #define GET_VALUE(vector, index)         (vector[index])

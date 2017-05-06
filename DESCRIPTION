@@ -1,6 +1,6 @@
 Package: biclique
 Title: Maximal Biclique Enumeration in Bipartite Graphs
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(
     person("Yuping", "Lu", , "yupinglu@utk.edu", role = c("aut", "cre")),
     person("Charles", "Phillips", role = "aut"),

@@ -8,7 +8,6 @@
 #define __BICLIQUE_H
 
 #include <R.h>
-#include <Rdefines.h>
 #include <Rinternals.h>
 
 /* ---------------------------------------- *

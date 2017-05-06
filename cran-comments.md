@@ -1,9 +1,8 @@
-## Resubmission
-This is a resubmission. In this version I have:
+## New Version
+This is a new version. In this version I have:
 
-* Space after "doi:" has been removed.
-* Simplified the title and added a reference papaer in the Description field.
-* All examples are tested during R CMD check.
+* fixed bugs on OSX.
+* updated package title
 
 ## Test environments
 * OS X, R 3.4.0
@@ -12,9 +11,7 @@ This is a resubmission. In this version I have:
 
 ## R CMD check results
 
-There were no ERRORs or WARNINGs.
-There is 1 NOTE.
-This is my first submission.
+There were no ERRORs, WARNINGs or NOTEs
 
 ## Reverse dependencies
 

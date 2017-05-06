@@ -15,7 +15,6 @@
 #define __R_BICLIQUE_DRIVER__
 
 #include <R.h>
-#include <Rdefines.h>
 #include <Rinternals.h>
 
 #include <string.h>

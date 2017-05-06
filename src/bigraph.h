@@ -8,7 +8,6 @@
 #define __BIGRAPH_H
 
 #include <R.h>
-#include <Rdefines.h>
 #include <Rinternals.h>
 
 #include <stdio.h>
