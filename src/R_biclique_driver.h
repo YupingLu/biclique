@@ -7,7 +7,7 @@
  * Copyright 2016-2017
  * Department of Computer Science, University of Tennessee, Knoxville
  *
- * Last modified: March 2017
+ * Last modified: August 2017
  *
  */
 
@@ -27,7 +27,7 @@
 #define newRptr(ptr,Rptr,fin) PROTECT(Rptr = R_MakeExternalPtr(ptr, R_NilValue, R_NilValue)); R_RegisterCFinalizerEx(Rptr, fin, TRUE)
 /* newRptr(already_allocated_C_pointer, R_pointer_to_be_made_for_it, finalizer) */
 
-void maximal_biclique(BiGraph *G, int *profile, int **g_right, int **g_left);
+void maximal_biclique(BiGraph *G, num_t *profile, num_t **g_right, num_t **g_left);
 
 SEXP copy_data (SEXP C_data);
 SEXP R_biclique(SEXP R_file, SEXP R_lleast, SEXP R_rleast, SEXP R_degree, SEXP R_version, SEXP R_print, SEXP R_input);

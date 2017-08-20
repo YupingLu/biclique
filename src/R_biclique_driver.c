@@ -7,7 +7,7 @@
  * Copyright 2016-2017
  * Department of Computer Science, University of Tennessee, Knoxville
  *
- * Last modified: March 2017
+ * Last modified: August 2017
  *
  */
 
@@ -21,8 +21,8 @@ extern long long node_num;
 extern int SORT_TYPE;
 
 /* Global Variables */
-extern int *nnr;
-extern int *nnl;
+extern num_t *nnr;
+extern num_t *nnl;
 
 FILE *fp;
 char *infn;
@@ -43,19 +43,19 @@ static void finalizer0(SEXP Rptr)
     }
 }
 
-void maximal_biclique(BiGraph *G, int *profile, int **g_right, int **g_left)
+void maximal_biclique(BiGraph *G, num_t *profile, num_t **g_right, num_t **g_left)
 {
-    int n2 = G->_num_v2;
-    int n1 = G->_num_v1;
+    unsigned int n2 = G->_num_v2;
+    unsigned int n1 = G->_num_v1;
 
     /* Allocate memory for nnr and nnl. 
     * 1st element of nnr/nnl is the totoal number of bicliques
     * other elements of nnr/nnl are the totoal number of nodes in each biclique
     */
-    nnr = (int *) Calloc ((n2 * n1 + 1), int);
-    nnl = (int *) Calloc ((n2 * n1 + 1), int);
+    nnr = (num_t *) Calloc ((n2 * n1 + 1), num_t);
+    nnl = (num_t *) Calloc ((n2 * n1 + 1), num_t);
     vid_t cand[n2];
-    int i;
+    unsigned int i;
 
     for (i = 0; i < n2; i++) cand[i] = i;
     biclique_enumerate(g_right, g_left, profile, G, cand, n2);
@@ -90,11 +90,11 @@ SEXP R_biclique(SEXP R_file, SEXP R_lleast, SEXP R_rleast, SEXP R_degree, SEXP R
     else if (INPUT==1) G = bigraph_binarymatrix_in(fp);
     fclose(fp);
     
-    int n2 = G->_num_v2;
-    int n1 = G->_num_v1;
+    unsigned int n2 = G->_num_v2;
+    unsigned int n1 = G->_num_v1;
 
     if (DEGREE) {
-        int i;
+        unsigned int i;
         // Get the degreelist
         R_data = PROTECT(allocVector(VECSXP, n1+n2));
         SEXP list_names = PROTECT(allocVector(STRSXP, n1+n2));
@@ -115,15 +115,15 @@ SEXP R_biclique(SEXP R_file, SEXP R_lleast, SEXP R_rleast, SEXP R_degree, SEXP R
     }
     else {
         SEXP profile_data;
-        int *profile = (int *) Calloc((3*(n1 * n2) + 9), int);
+        num_t *profile = (num_t *) Calloc((3*(n1 * n2) + 9), num_t);
         SEXP R_biclique_right, R_biclique_left;
         R_data = PROTECT(allocVector(VECSXP, 3));
 
         /*
         * Allocate memory for g_right and g_left. Biclique nodes in them.
         */
-        int **g_right = (int **) Calloc(n2 * n1, int*);
-        int **g_left = (int **) Calloc(n2 * n1, int*);
+        num_t **g_right = (num_t **) Calloc(n2 * n1, num_t*);
+        num_t **g_left = (num_t **) Calloc(n2 * n1, num_t*);
 
         maximal_biclique(G, profile, g_right, g_left);
 
@@ -131,7 +131,7 @@ SEXP R_biclique(SEXP R_file, SEXP R_lleast, SEXP R_rleast, SEXP R_degree, SEXP R
         R_biclique_left = PROTECT(allocVector(VECSXP, nnl[0]));
 
         // copy the bicliques to R
-        int i, j;
+        unsigned int i, j;
         for(j = 0; j < nnr[0]; j++) {
 
             // Allocate temp R memory
@@ -189,9 +189,9 @@ SEXP R_biclique(SEXP R_file, SEXP R_lleast, SEXP R_rleast, SEXP R_degree, SEXP R
 SEXP copy_data (SEXP C_data)
 {
     SEXP R_data;  
-    int *data = R_ExternalPtrAddr(C_data);
-    int nelems = data[0];  /* get the number of elements to copy */
-    int pos;
+    unsigned int *data = R_ExternalPtrAddr(C_data);
+    unsigned int nelems = data[0];  /* get the number of elements to copy */
+    unsigned int pos;
 
     R_data = PROTECT(allocVector(INTSXP, nelems));
     for(pos = 0; pos < nelems; pos++)

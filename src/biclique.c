@@ -1,7 +1,7 @@
 /* Enumerate biclique in bipartite graphs
  * Author: Yuping Lu
  * Created: February 2017
- * Last Update: March 2017
+ * Last Update: August 2017
  */
 
 #include <stdio.h>
@@ -19,24 +19,22 @@ int LLEAST, RLEAST;
 int VERSION;
 int PRINT;
 
-int *nnr;
-int *nnl;
-
-typedef unsigned long num_t;
+num_t *nnr;
+num_t *nnl;
 
 /* ------------------------------------------------------------- *
  * Function: biclique_profile_out()                              *
  *   Print out the profile, no. of left/right vertices, no. of   *
  *   edges, no.of biclique, size of vertex/edge maximum biclique *
  * ------------------------------------------------------------- */
-void biclique_profile_out(int *profile, BiGraph *G, num_t *nclique)
+void biclique_profile_out(num_t *profile, BiGraph *G, num_t *nclique)
 {
     unsigned int n1 = G->_num_v1;
     unsigned int n2 = G->_num_v2;
     num_t num, sum=0;
     int ei=0, ej=0;
     int vi=0, vj=0;
-    int i, j, length;
+    unsigned int i, j, length;
 
     length = 0;
     profile[length++] = 0;
@@ -72,19 +70,19 @@ void biclique_profile_out(int *profile, BiGraph *G, num_t *nclique)
  * Function: biclique_out()                                      *
  *   Print out a biclique: left and right vertices on two lines  *
  * ------------------------------------------------------------- */
-void biclique_out(int **g_right, int **g_left, BiGraph *G, vid_t *right, \
+void biclique_out(num_t **g_right, num_t **g_left, BiGraph *G, vid_t *right, \
                 int nr, vid_t *left, int nl)
 {
     int i;
 
     //*g_right = (int *) R_alloc(nr, sizeof(int));
-    *g_right = (int *) Calloc(nr, int);
+    *g_right = (num_t *) Calloc(nr, num_t);
     for (i = 0; i < nr; i++) {
         (*g_right)[i] = right[i];
     }
 
     //*g_left = (int *) R_alloc(nl, sizeof(int));
-    *g_left = (int *) Calloc(nl, int);
+    *g_left = (num_t *) Calloc(nl, num_t);
      for (i = 0; i < nl; i++) {
         (*g_left)[i] = left[i];
     }
@@ -137,7 +135,7 @@ void searchtreenode_out2(BiGraph *G, vid_t *clique, vid_t *right, \
  *  Function: biclique_find_basic()
  *    The basic version of biclique_find().
  * --------------------------------------------------- */
-void biclique_find_basic(int **g_right, int **g_left, BiGraph *G, num_t *nclique, \
+void biclique_find_basic(num_t **g_right, num_t **g_left, BiGraph *G, num_t *nclique, \
         vid_t *clique, int nc, vid_t *left, int nl, vid_t *right, int ne, int ce)
 {
     unsigned int n1 = G->_num_v1;
@@ -228,7 +226,7 @@ void biclique_find_basic(int **g_right, int **g_left, BiGraph *G, num_t *nclique
  *  Function: biclique_find_improve()
  *    The Improved Version of biclique_find().
  * --------------------------------------------------- */
-void biclique_find_improve(int **g_right, int **g_left, BiGraph *G, num_t *nclique, \
+void biclique_find_improve(num_t **g_right, num_t **g_left, BiGraph *G, num_t *nclique, \
         vid_t *clique, int nc, vid_t *left, int nl, vid_t *right, int ne, int ce)
 {
     unsigned int n1 = G->_num_v1;
@@ -356,7 +354,7 @@ void biclique_find_improve(int **g_right, int **g_left, BiGraph *G, num_t *ncliq
 /* --------------------------------------------------- *
  *  Biclique Enumerating Main Function 
  * --------------------------------------------------- */
-void biclique_enumerate(int **g_right, int **g_left, int *profile, BiGraph *G, \
+void biclique_enumerate(num_t **g_right, num_t **g_left, num_t *profile, BiGraph *G, \
                 vid_t *cand, int lcand)
 {
     unsigned int n1 = G->_num_v1;
