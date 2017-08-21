@@ -53,7 +53,7 @@ void biclique_profile_out(num_t *profile, BiGraph *G, num_t *nclique)
             }
         }
     }
-    
+
     profile[length++] = n1;
     profile[length++] = n2;
     profile[length++] = G->_num_edges;
@@ -73,7 +73,7 @@ void biclique_profile_out(num_t *profile, BiGraph *G, num_t *nclique)
 void biclique_out(num_t **g_right, num_t **g_left, BiGraph *G, vid_t *right, \
                 int nr, vid_t *left, int nl)
 {
-    int i;
+    unsigned int i;
 
     //*g_right = (int *) R_alloc(nr, sizeof(int));
     *g_right = (num_t *) Calloc(nr, num_t);

@@ -10,7 +10,7 @@
 #include <R.h>
 #include <Rinternals.h>
 
-typedef unsigned long num_t;
+typedef unsigned int num_t;
 
 /* ---------------------------------------- *
  * Biclique Enumeration Functions           *
