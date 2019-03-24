@@ -4,8 +4,8 @@
 \alias{bi.clique}
 \title{Biclique enumeration}
 \usage{
-bi.clique(filename, lleast = 1, rleast = 1, version = 1, filetype = 0,
-  envir = .GlobalEnv$.bienv)
+bi.clique(filename, lleast = 1, rleast = 1, version = 1, getclique = 1,
+  filetype = 0, envir = .GlobalEnv$.bienv)
 }
 \arguments{
 \item{filename}{Input file name}
@@ -15,6 +15,8 @@ bi.clique(filename, lleast = 1, rleast = 1, version = 1, filetype = 0,
 \item{rleast}{Least number of right partite <default = 1>}
 
 \item{version}{Algorithm version <default = 1> [1|2]}
+
+\item{getclique}{Get bicliques <default = 1>. If you set it to 0. you'll only get the statistics without bicliques.}
 
 \item{filetype}{Input file format <default = 0>. 0-edge list, 1-binary matrix.}
 

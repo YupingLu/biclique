@@ -1,3 +1,8 @@
+biclique 1.0.2
+--------------
+* Add a new parameter getclique to bi.clique.
+* Fix check problems and resubmit to CRAN.
+
 biclique 1.0.1
 --------------
 * Fix left shift runtime error and strcpy error on OSX.

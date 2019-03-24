@@ -1,13 +1,9 @@
-## New Version
-This is a new version. In this version I have:
-
-* fixed bugs on OSX.
-* updated package title
+This is a small patch release fixing the check errors on CRAN
 
 ## Test environments
-* OS X, R 3.4.0
-* Ubuntu 16.04, R 3.4.0
-* win-builder (devel and release)
+* OS X, R 3.4.2
+* travis-ci: R 3.4, R-release
+* win-builder: R-devel, R-release, R-oldrelease
 
 ## R CMD check results
 

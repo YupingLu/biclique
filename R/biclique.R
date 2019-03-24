@@ -13,6 +13,7 @@
 #' @param rleast Least number of right partite <default = 1>
 #' @param version Algorithm version <default = 1> [1|2]
 #' @param filetype Input file format <default = 0>. 0-edge list, 1-binary matrix.
+#' @param getclique Get bicliques <default = 1>. If you set it to 0. you'll only get the statistics without bicliques.
 #' @param envir biclique environment
 #'
 #' @examples
@@ -23,7 +24,7 @@
 #' bicliques$biclique1
 #'
 #' @export
-bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, filetype = 0, envir = .GlobalEnv$.bienv)
+bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, getclique = 1, filetype = 0, envir = .GlobalEnv$.bienv)
 {
     # reset global variables
     init_state()
@@ -31,7 +32,7 @@ bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, filetype = 
     # parameters for R_biclique
     isdegree = 0
     # Get bicliques <default = 1>. If you set it to 0. you'll only get the statistics without bicliques.
-    getclique = 1
+    #getclique = 1
 
     # Get raw data list
     data.raw = .Call("R_biclique", as.character(filename), as.integer(lleast), as.integer(rleast), as.integer(isdegree),
