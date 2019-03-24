@@ -4,7 +4,7 @@
  * Author: Yuping Lu, yupinglu@utk.edu
  * Created: September 2016
  *
- * Copyright 2016-2017
+ * Copyright 2016-2019
  * Department of Computer Science, University of Tennessee, Knoxville
  *
  * Last modified: August 2017

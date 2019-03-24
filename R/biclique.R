@@ -162,8 +162,12 @@ bi.print <- function(envir = .GlobalEnv$.bienv)
 #' @param filetype Input file format <default = 0>. 0-edge list, 1-binary matrix.
 #'
 #' @examples
-#' bi.format(system.file("extdata", "example2.el", package = "biclique"))
-#' bi.format(system.file("extdata", "example5.bmat", package = "biclique"), 1)
+#' \dontshow{.old_wd <- setwd(tempdir())}
+#' file.copy(system.file("extdata", "example2.el", package = "biclique"), getwd())
+#' file.copy(system.file("extdata", "example5.bmat", package = "biclique"), getwd())
+#' bi.format("example2.el")
+#' bi.format("example5.bmat", 1)
+#' \dontshow{setwd(.old_wd)}
 #'
 #' @importFrom utils read.table write.table
 #' @export
