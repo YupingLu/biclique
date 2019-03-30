@@ -166,7 +166,7 @@ bi.print <- function(envir = .GlobalEnv$.bienv)
 #' file.copy(system.file("extdata", "example2.el", package = "biclique"), dir)
 #' file.copy(system.file("extdata", "example5.bmat", package = "biclique"), dir)
 #' bi.format(file.path(dir, "example2.el"))
-#' bi.format(file.path(dir, "example5.bmat", 1))
+#' bi.format(file.path(dir, "example5.bmat"), 1)
 #' @importFrom utils read.table write.table
 #' @export
 bi.format <- function(filename, filetype = 0)
