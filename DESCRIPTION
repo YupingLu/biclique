@@ -4,7 +4,8 @@ Version: 1.0.2
 Authors@R: c(
     person("Yuping", "Lu", , "yupinglu89@gmail.com", role = c("aut", "cre", "cph")),
     person("Charles", "Phillips", role = "aut"),
-    person("Michael", "Langston", role = "aut")
+    person("Michael", "Langston", role = "aut"),
+    person("Department of Computer Science, University of Tennessee, Knoxville", role = "cph")
     )
 Encoding: UTF-8
 Description: A tool for enumerating maximal complete bipartite graphs. The input should be a edge list file or a binary matrix file. 
