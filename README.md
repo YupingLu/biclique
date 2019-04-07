@@ -4,6 +4,10 @@ Maximal Biclique Enumeration in Bipartite Graphs
 <https://cran.r-project.org/package=biclique>
 
 [![Build Status](https://travis-ci.org/YupingLu/biclique.svg?branch=master)](https://travis-ci.org/YupingLu/biclique)
+[![Downloads](https://cranlogs.r-pkg.org/badges/biclique?color=brightgreen)](https://www.r-pkg.org/pkg/biclique)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/YupingLu/biclique/issues)
+[![License](https://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](https://www.gnu.org/licenses/gpl-2.0.html)
+[![CRAN](https://www.r-pkg.org/badges/version/biclique)](https://cran.r-project.org/package=biclique)
 
 
 Description
