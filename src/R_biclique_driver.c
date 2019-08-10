@@ -15,7 +15,7 @@
 
 extern int LLEAST, RLEAST;
 extern int CACHE_SIZE;
-extern int VERSION;
+extern int VERSION_0;
 extern int PRINT;
 extern long long node_num;
 extern int SORT_TYPE;
@@ -81,7 +81,7 @@ SEXP R_biclique(SEXP R_file, SEXP R_lleast, SEXP R_rleast, SEXP R_degree, SEXP R
     LLEAST = asInteger(R_lleast);
     RLEAST = asInteger(R_rleast);
     DEGREE = asInteger(R_degree);
-    VERSION = asInteger(R_version);
+    VERSION_0 = asInteger(R_version);
     PRINT = asInteger(R_print);
     INPUT = asInteger(R_input);  // default = edge list = 0
     SORT_TYPE = 1;

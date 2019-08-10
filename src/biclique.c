@@ -16,7 +16,7 @@
 
 /* Global Variables */
 int LLEAST, RLEAST;
-int VERSION;
+int VERSION_0;
 int PRINT;
 
 num_t *nnr;
@@ -374,9 +374,9 @@ void biclique_enumerate(num_t **g_right, num_t **g_left, num_t *profile, BiGraph
     for (v = 0; v < n2; v++) right[v] = v; // every right vertex is candidate
  
     /* Call the recursive function to find maximal bicliques */
-    if (VERSION == 1) {
+    if (VERSION_0 == 1) {
         biclique_find_basic(g_right, g_left, G, nclique, clique, 0, left, n1, right, 0, n2);
-    }else if (VERSION == 2) {
+    }else if (VERSION_0 == 2) {
         /* Sort the candidate right vertices */
         memset(noc, 0, n2*sizeof(int));
         for (v = 0; v < n2; v++) {

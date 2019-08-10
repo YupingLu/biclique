@@ -1,3 +1,7 @@
+biclique 1.0.3
+--------------
+* Fix clang check errors by renaming VERSION.
+
 biclique 1.0.2
 --------------
 * Add a new parameter getclique to bi.clique.
