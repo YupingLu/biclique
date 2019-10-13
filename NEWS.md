@@ -1,3 +1,9 @@
+biclique 1.0.4
+--------------
+* Rename argument names for bi.clique.
+* Format bi.clique output.
+* Add a new example input file.
+
 biclique 1.0.3
 --------------
 * Fix clang check errors by renaming VERSION.

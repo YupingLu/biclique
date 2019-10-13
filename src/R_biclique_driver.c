@@ -66,7 +66,7 @@ void maximal_biclique(BiGraph *G, num_t *profile, num_t **g_right, num_t **g_lef
  * Two formats are supported: bel and bmat
  * If start and count is not specified, a whole list is returned.
  */
-SEXP R_biclique(SEXP R_file, SEXP R_lleast, SEXP R_rleast, SEXP R_degree, SEXP R_version, SEXP R_print, SEXP R_input)
+SEXP R_biclique(SEXP R_file, SEXP R_left_least, SEXP R_right_least, SEXP R_degree, SEXP R_version, SEXP R_print, SEXP R_input)
 {
     BiGraph *G = NULL;
     SEXP R_data;
@@ -78,8 +78,8 @@ SEXP R_biclique(SEXP R_file, SEXP R_lleast, SEXP R_rleast, SEXP R_degree, SEXP R
     }
 
     // Set Global variables.
-    LLEAST = asInteger(R_lleast);
-    RLEAST = asInteger(R_rleast);
+    LLEAST = asInteger(R_left_least);
+    RLEAST = asInteger(R_right_least);
     DEGREE = asInteger(R_degree);
     VERSION_0 = asInteger(R_version);
     PRINT = asInteger(R_print);

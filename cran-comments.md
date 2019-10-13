@@ -1,5 +1,7 @@
-This is a small patch release fixing the check errors on CRAN
-* VERSION clashes issue is solved.
+This is a small patch release.
+* Rename argument names for bi.clique.
+* Format bi.clique output.
+* Add a new example input file.
 
 ## Test environments
 * OS X, R 3.4.2

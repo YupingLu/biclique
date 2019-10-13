@@ -9,8 +9,8 @@
 #' Two versions of algorithms are implemented in this function, you can choose either one to get bicliques.
 #'
 #' @param filename Input file name
-#' @param lleast Least number of left partite <default = 1>
-#' @param rleast Least number of right partite <default = 1>
+#' @param left_least Least number of left partite <default = 1>
+#' @param right_least Least number of right partite <default = 1>
 #' @param version Algorithm version <default = 1> [1|2]
 #' @param filetype Input file format <default = 0>. 0-edge list, 1-binary matrix.
 #' @param getclique Get bicliques <default = 1>. If you set it to 0. you'll only get the statistics without bicliques.
@@ -24,7 +24,7 @@
 #' bicliques$biclique1
 #'
 #' @export
-bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, getclique = 1, filetype = 0, envir = .GlobalEnv$.bienv)
+bi.clique <- function(filename, left_least = 1, right_least = 1, version = 1, filetype = 0, getclique = 1, envir = .GlobalEnv$.bienv)
 {
     # reset global variables
     init_state()
@@ -35,7 +35,7 @@ bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, getclique =
     #getclique = 1
 
     # Get raw data list
-    data.raw = .Call("R_biclique", as.character(filename), as.integer(lleast), as.integer(rleast), as.integer(isdegree),
+    data.raw = .Call("R_biclique", as.character(filename), as.integer(left_least), as.integer(right_least), as.integer(isdegree),
                                    as.integer(version), as.integer(getclique), as.integer(filetype))
 
     # Get profile raw data
@@ -44,7 +44,7 @@ bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, getclique =
     nelems = profile.raw[1]
 
     # paste profile data into profile
-    profile = paste("biclique\tNumber\n")
+    profile = paste("Biclique\tNumber\n")
 
    	for (i in seq(1, nelems-9, 3)){
 
@@ -60,8 +60,9 @@ bi.clique <- function(filename, lleast = 1, rleast = 1, version = 1, getclique =
     profile = paste(profile, "Number of right vertices    : ", profile.raw[nelems-6], "\n", sep="")
     profile = paste(profile, "Number of edges             : ", profile.raw[nelems-5], "\n", sep="")
     profile = paste(profile, "Number of bicliques         : ", profile.raw[nelems-4], "\n", sep="")
-    profile = paste(profile, "Maximum edge biclique       : ", "K", profile.raw[nelems-2], ",", profile.raw[nelems-3], "\n", sep="")
-    profile = paste(profile, "Maximum vertex biclique     : ", "K", profile.raw[nelems], ",", profile.raw[nelems-1], "\n", sep="")
+    profile = paste(profile, "Vertex-maximum biclique     : ", "K", profile.raw[nelems], ",", profile.raw[nelems-1], "\n", sep="")
+    profile = paste(profile, "Edge-maximum biclique       : ", "K", profile.raw[nelems-2], ",", profile.raw[nelems-3], "\n", sep="")
+    
 
     # print profile
     on.exit(cat(profile))
