@@ -55,10 +55,10 @@ bi.clique <- function(filename, left_least = 1, right_least = 1, version = 1, fi
         envir$cnt <- envir$cnt + 1
    	}
 
-   	profile = paste(profile, "\n", sep="")
-    profile = paste(profile, "Number of left vertices     : ", profile.raw[nelems-7], "\n", sep="")
-    profile = paste(profile, "Number of right vertices    : ", profile.raw[nelems-6], "\n", sep="")
-    profile = paste(profile, "Number of edges             : ", profile.raw[nelems-5], "\n", sep="")
+   	#profile = paste(profile, "\n", sep="")
+    #profile = paste(profile, "Number of left vertices     : ", profile.raw[nelems-7], "\n", sep="")
+    #profile = paste(profile, "Number of right vertices    : ", profile.raw[nelems-6], "\n", sep="")
+    #profile = paste(profile, "Number of edges             : ", profile.raw[nelems-5], "\n", sep="")
     profile = paste(profile, "Number of bicliques         : ", profile.raw[nelems-4], "\n", sep="")
     profile = paste(profile, "Vertex-maximum biclique     : ", "K", profile.raw[nelems], ",", profile.raw[nelems-1], "\n", sep="")
     profile = paste(profile, "Edge-maximum biclique       : ", "K", profile.raw[nelems-2], ",", profile.raw[nelems-3], "\n", sep="")
