@@ -59,11 +59,9 @@ Ask Questions
 
 License
 -------
-© Contributors, 2019. Licensed under an [GPL-2.0](https://github.com/YupingLu/biclique/blob/master/LICENSE) license.
+© Contributors, 2020. Licensed under an [GPL-2.0](https://github.com/YupingLu/biclique/blob/master/LICENSE) license.
 
 Reference Paper
 ---------------
-
-Zhang Y, Phillips CA, Rogers GL, Baker EJ, Chesler EJ, Langston MA. On finding bicliques in bipartite
-graphs: a novel algorithm and its application to the integration of diverse biological data types. BMC bioinformatics.
-2014; 15(1):110. doi: 10.1186/1471-2105-15-110 PMID: 24731198
+Lu, Y., Phillips, C.A. & Langston, M.A. Biclique: an R package for maximal biclique enumeration in bipartite graphs. 
+BMC Res Notes 13, 88 (2020). https://doi.org/10.1186/s13104-020-04955-0

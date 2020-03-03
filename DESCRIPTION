@@ -1,6 +1,6 @@
 Package: biclique
 Title: Maximal Biclique Enumeration in Bipartite Graphs
-Version: 1.0.4
+Version: 1.0.5
 Authors@R: c(
     person("Yuping", "Lu", , "yupinglu89@gmail.com", role = c("aut", "cre", "cph")),
     person("Charles", "Phillips", role = "aut"),
@@ -9,7 +9,7 @@ Authors@R: c(
     )
 Encoding: UTF-8
 Description: A tool for enumerating maximal complete bipartite graphs. The input should be a edge list file or a binary matrix file. 
-             The output are maximal complete bipartite graphs. Algorithms used can be found in this paper Y Zhang et al. BMC Bioinformatics 2014 15:110 <doi:10.1186/1471-2105-15-110>.
+             The output are maximal complete bipartite graphs. Algorithms used can be found in this paper Y. Lu et al. BMC Res Notes 13, 88 (2020) <doi:10.1186/s13104-020-04955-0>.
 URL: https://github.com/YupingLu/biclique
 BugReports: https://github.com/YupingLu/biclique/issues
 Depends:
@@ -19,4 +19,4 @@ Imports:
     utils
 License: GPL-2 | file LICENSE
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2

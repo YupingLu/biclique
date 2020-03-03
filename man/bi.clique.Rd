@@ -4,8 +4,15 @@
 \alias{bi.clique}
 \title{Biclique enumeration}
 \usage{
-bi.clique(filename, left_least = 1, right_least = 1, version = 1,
-  filetype = 0, getclique = 1, envir = .GlobalEnv$.bienv)
+bi.clique(
+  filename,
+  left_least = 1,
+  right_least = 1,
+  version = 1,
+  filetype = 0,
+  getclique = 1,
+  envir = .GlobalEnv$.bienv
+)
 }
 \arguments{
 \item{filename}{Input file name}

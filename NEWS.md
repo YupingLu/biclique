@@ -1,3 +1,7 @@
+biclique 1.0.5
+--------------
+* Update the reference paper.
+
 biclique 1.0.4
 --------------
 * Rename argument names for bi.clique.

@@ -1,10 +1,8 @@
-This is a small patch release.
-* Rename argument names for bi.clique.
-* Format bi.clique output.
-* Add a new example input file.
+This is a small update release.
+* Update the reference paper.
 
 ## Test environments
-* OS X, R 3.4.2
+* OS X, R 3.6.1
 * travis-ci: R 3.4, R-release
 * win-builder: R-devel, R-release, R-oldrelease
 
